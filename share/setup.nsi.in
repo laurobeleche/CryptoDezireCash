@@ -50,9 +50,9 @@ Var StartMenuGroup
 # Installer attributes
 OutFile @abs_top_srcdir@/@PACKAGE_TARNAME@-${VERSION}-win@WINDOWS_BITS@-setup.exe
 !if "@WINDOWS_BITS@" == "64"
-InstallDir $PROGRAMFILES64\Crypto Dezire Cash
+InstallDir $PROGRAMFILES64\CryptoDezireCash
 !else
-InstallDir $PROGRAMFILES\Crypto Dezire Cash
+InstallDir $PROGRAMFILES\CryptoDezireCash
 !endif
 CRCCheck on
 XPStyle on
