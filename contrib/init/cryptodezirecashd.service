@@ -1,0 +1,26 @@
+[Unit]
+Description=Crypto Dezire Cash's distributed currency daemon
+After=network.target
+
+[Service]
+User=cryptodezirecash
+Group=cryptodezirecash
+
+Type=forking
+PIDFile=/var/lib/cryptodezirecashd/cryptodezirecashd.pid
+
+ExecStart=/usr/bin/cryptodezirecashd -daemon -pid=/var/lib/cryptodezirecashd/cryptodezirecashd.pid \
+          -conf=/etc/cryptodezirecash/cryptodezirecash.conf -datadir=/var/lib/cryptodezirecashd
+
+ExecStop=-/usr/bin/cryptodezirecash-cli -conf=/etc/cryptodezirecash/cryptodezirecash.conf \
+         -datadir=/var/lib/cryptodezirecashd stop
+
+Restart=always
+PrivateTmp=true
+TimeoutStopSec=60s
+TimeoutStartSec=2s
+StartLimitInterval=120s
+StartLimitBurst=5
+
+[Install]
+WantedBy=multi-user.target

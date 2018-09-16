@@ -1,0 +1,15 @@
+# http://standards.freedesktop.org/desktop-entry-spec/desktop-entry-spec-1.0.html
+
+[Desktop Entry]
+Type=Application
+Version=1.4.35
+Encoding=UTF-8
+Name=Crypto Dezire Cash
+Icon=${SNAP}/cryptodezirecash128.png
+MimeType=x-scheme-handler/cryptodezirecash;
+Exec=cryptodezirecash %u
+Terminal=false
+Categories=Office;Finance;
+Comment=Crypto Dezire Cash P2P Cryptocurrency
+Keywords=internet;cryptodezirecash;
+Name[de_AT]=cryptodezirecash.desktop

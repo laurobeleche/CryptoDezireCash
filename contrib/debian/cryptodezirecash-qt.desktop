@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Crypto Dezire Cash
+Comment=Crypto Dezire Cash P2P Cryptocurrency
+Comment[fr]=Crypto Dezire Cash, monnaie virtuelle cryptographique pair à pair
+Comment[tr]=Crypto Dezire Cash, eşten eşe kriptografik sanal para birimi
+Exec=cryptodezirecash-qt %u
+Terminal=false
+Type=Application
+Icon=cryptodezirecash128
+MimeType=x-scheme-handler/cryptodezirecash;
+Categories=Office;Finance;
