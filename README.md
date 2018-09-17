@@ -16,8 +16,8 @@ More information at [cryptodezirecash.com](http://www.cryptodezirecash.com/) Vis
 <tr><td>Algo</td><td>Quark</td></tr>
 <tr><td>Block Time</td><td>120 Seconds</td></tr>
 <tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
-<tr><td>Max Coin Supply (PoW Phase)</td><td>198,360,471 CDZC</td></tr>
-<tr><td>Max Coin Supply (PoS Phase)</td><td>Infinite</td></tr>
+<tr><td>Max Coin Supply (PoW Phase)</td><td>1,500,000 CDZC</td></tr>
+<tr><td>Max Coin Supply (PoS Phase)</td><td>21,000,000</td></tr>
 <tr><td>Premine in block 1</td><td>1,500,000 CDZC*</td></tr>
 </table>
 
