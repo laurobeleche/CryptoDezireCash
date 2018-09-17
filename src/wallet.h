@@ -309,12 +309,12 @@ public:
 
     int getZeromintPercentage()
     {
-        return nZeromintPercentage;
+        return 0;
     }
 
     bool isZeromintEnabled()
     {
-        return fEnableZeromint;
+        return false;
     }
 
     void setZCdzcAutoBackups(bool fEnabled)
