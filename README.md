@@ -41,4 +41,17 @@ More information at [cryptodezirecash.com](http://www.cryptodezirecash.com/) Vis
 <tr><td>Phase 1</td><td>1002-50101</td><td>2 CDZC</td><td>75% (1.5 CDZC) & 25% (0.5 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
 <tr><td>Phase 2</td><td>50102-100102</td><td>3.0 CDZC</td><td>75% (2.25 CDZC) & 25% (0.75 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
 <tr><td>Phase 3</td><td>100103-200103</td><td>4.0 CDZC</td><td>75% (3.0 CDZC) & 25% (1.0 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
+<tr><td>Phase 4</td><td>200104-300104</td><td>5.0 CDZC</td><td>74% (3.7 CDZC) & 25% (1.25 CDZC) respectively</td><td>1% (0.05 CDZC)</td></tr>
+<tr><td>Phase 5</td><td>300105-400105</td><td>6.0 CDZC</td><td>74% (4.4 CDZC) & 25% (1.5 CDZC) respectively</td><td>1% (0.06 CDZC)</td></tr>
+<tr><td>Phase 6</td><td>400106-500106</td><td>7.0 CDZC</td><td>74% (5.18 CDZC) & 25% (1.75 CDZC) respectively</td><td>1% (0.07 CDZC)</td></tr>
+<tr><td>Phase 7</td><td>500107-600107</td><td>8.0 CDZC</td><td>74% (5.92 CDZC) & 25% (2.0 CDZC) respectively</td><td>1% (0.08 CDZC)</td></tr>
+<tr><td>Phase 8</td><td>600108-700108</td><td>9.0 CDZC</td><td>74% (6.66 CDZC) & 25% (2.25 CDZC) respectively</td><td>1% (0.09 CDZC)</td></tr>
+<tr><td>Phase 9</td><td>700109-1000109</td><td>10.0 CDZC</td><td>74% (7.4 CDZC) & 25% (2.5 CDZC) respectively</td><td>1% (0.1 CDZC)</td></tr>
+<tr><td>Phase 10</td><td>1000110-1100110</td><td>9.0 CDZC</td><td>74% (6.66 CDZC) & 25% (2.25 CDZC) respectively</td><td>1% (0.09 CDZC)</td></tr>
+<tr><td>Phase 11</td><td>1100111-1200111</td><td>8.0 CDZC</td><td>74% (5.92 CDZC) & 25% (2.0 CDZC) respectively</td><td>1% (0.08 CDZC)</td></tr>
+<tr><td>Phase 12</td><td>1200112-1300112</td><td>7.0 CDZC</td><td>74% (5.18 CDZC) & 25% (1.75 CDZC) respectively</td><td>1% (0.07 CDZC)</td></tr>
+<tr><td>Phase 13</td><td>1300113-1400113</td><td>6.0 CDZC</td><td>74% (4.4 CDZC) & 25% (1.5 CDZC) respectively</td><td>1% (0.06 CDZC)</td></tr>
+<tr><td>Phase 14</td><td>1400114-1500114</td><td>5.0 CDZC</td><td>74% (3.7 CDZC) & 25% (1.25 CDZC) respectively</td><td>1% (0.05 CDZC)</td></tr>
+<tr><td>Phase 15</td><td>1500115-1600115</td><td>4.0 CDZC</td><td>74% (2.96 CDZC) & 25% (1.0 CDZC) respectively</td><td>1% (0.04 CDZC)</td></tr>
+<tr><td>Phase 16</td><td>1600116-end</td><td>3.0 CDZC</td><td>74% (2.22 CDZC) & 25% (0.75 CDZC) respectively</td><td>1% (0.03 CDZC)</td></tr>
 </table>
