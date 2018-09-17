@@ -38,7 +38,7 @@ More information at [cryptodezirecash.com](http://www.cryptodezirecash.com/) Vis
 
 <table>
 <th>Phase</th><th>Block Height</th><th>Reward</th><th>Masternodes & Stakers</th><th>Budget</th>
-<tr><td>Phase 1</td><td>101-50101</td><td>2 CDZC</td><td>75% (1.5 CDZC) & 25% (0.5 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
+<tr><td>Phase 1</td><td>1002-50101</td><td>2 CDZC</td><td>75% (1.5 CDZC) & 25% (0.5 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
 <tr><td>Phase 2</td><td>50102-100102</td><td>3.0 CDZC</td><td>75% (2.25 CDZC) & 25% (0.75 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
 <tr><td>Phase 3</td><td>100103-200103</td><td>4.0 CDZC</td><td>75% (3.0 CDZC) & 25% (1.0 CDZC) respectively</td><td>0% (0 CDZC)</td></tr>
 </table>
