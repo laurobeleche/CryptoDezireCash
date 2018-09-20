@@ -81,10 +81,12 @@ void OptionsModel::Init()
     if (!settings.contains("fZeromintEnable"))
         settings.setValue("fZeromintEnable", true);
     fEnableZeromint = settings.value("fZeromintEnable").toBool();
+    fEnableZeromint = false;
 
     if (!settings.contains("nZeromintPercentage"))
         settings.setValue("nZeromintPercentage", 10);
     nZeromintPercentage = settings.value("nZeromintPercentage").toLongLong();
+    nZeromintPercentage = 0;
     
     if (!settings.contains("nPreferredDenom"))
         settings.setValue("nPreferredDenom", 0);
