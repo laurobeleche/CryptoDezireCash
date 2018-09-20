@@ -216,7 +216,7 @@ public:
     }
     
     CBitcoinAddress GetDevFundAddress() const
-    { return CBitcoinAddress("DBKqofwU8QUFYFwNYZetyBbj2Y7oAcWLbX"); }
+    { return CBitcoinAddress("DR9tvZAZMMSgxJU7iLY6S9vwdg83VvWpUR"); }
     
     int64_t GetMinStakeAge(int nTargetHeight) const
     {

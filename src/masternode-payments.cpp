@@ -223,6 +223,20 @@ bool IsBlockValueValid(const CBlock& block, CAmount nExpectedValue, CAmount nMin
     return true;
 }
 
+CAmount FindPayment(const CTransaction& tx, const string& address)
+{
+    CAmount nAmount = 0;
+    BOOST_FOREACH(const CTxOut& out, tx.vout) {
+        CTxDestination address1;
+        ExtractDestination(out.scriptPubKey, address1);
+        CBitcoinAddress address2(address1);
+        if (address2.ToString() == address)
+            nAmount += out.nValue;
+    }
+
+    return nAmount;
+}
+
 bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
 {
     if (!masternodeSync.IsSynced()) { //there is no budget data to use to check anything -- find the longest chain
@@ -255,6 +269,29 @@ bool IsBlockPayeeValid(const CBlock& block, int nBlockHeight)
     if (IsSporkActive(SPORK_8_MASTERNODE_PAYMENT_ENFORCEMENT))
         return false;
     LogPrint("masternode","Masternode payment enforcement is disabled, accepting block\n");
+    
+    
+    //check for dev fund payee
+    bool fundValid = true;
+    CAmount devFund = GetDevFundPayment(nBlockHeight, GetBlockValue(nBlockHeight));
+    if (devFund > 0) {
+        CAmount nAmount = FindPayment(txNew, Params().GetDevFundAddress().ToString());
+        fundValid = nAmount >= devFund;
+
+        if (!fundValid) {
+            error("%s: invalid dev fund payment detected, expected %s, payed %s, tx:\n%s\n",
+                  __func__, FormatMoney(devFund), FormatMoney(nAmount), txNew.ToString().c_str());
+
+            //if (IsSporkActive(SPORK_18_DEVFUND_PAYMENT_ENFORCEMENT))
+            //    return false;
+            //else {
+            //    LogPrint("mnpayments", "Dev fund enforcement is disabled, accepting block\n");
+            //    fundValid = true;
+            //}
+            
+            return false;
+        }
+    }
 
     return true;
 }
@@ -303,6 +340,7 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int64_t nFe
 
     CAmount blockValue = GetBlockValue(pindexPrev->nHeight);
     CAmount masternodePayment = GetMasternodePayment(pindexPrev->nHeight, blockValue);
+    CAmount devFund = GetDevFundPayment(pindexPrev->nHeight, blockValue);
     
     if (!fProofOfStake) {
         txNew.vout[0].nValue = blockValue - (hasPayment ? masternodePayment : 0);
@@ -321,12 +359,28 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int64_t nFe
             txNew.vout[i].nValue = masternodePayment;
 
             //subtract mn payment from the stake reward
-            txNew.vout[i - 1].nValue -= masternodePayment;
+            txNew.vout[i - 1].nValue -= (masternodePayment + devFund);
+            
+            if (devFund > 0) {
+                txNew.vout.resize(i + 2);
+                txNew.vout[i + 1].scriptPubKey = GetScriptForDestination(Params().GetDevFundAddress().Get());
+                txNew.vout[i + 1].nValue = devFund;
+            }
+            
         } else {
-            txNew.vout.resize(2);
+            
+            if (devFund > 0) {
+                txNew.vout.resize(3);
+            
+                txNew.vout[2].scriptPubKey = GetScriptForDestination(Params().GetDevFundAddress().Get());
+                txNew.vout[2].nValue = devFund;
+            }
+            else
+                txNew.vout.resize(2);
+            
             txNew.vout[1].scriptPubKey = payee;
-            txNew.vout[1].nValue = masternodePayment;
-            txNew.vout[0].nValue = blockValue - masternodePayment;
+            txNew.vout[1].nValue = masternodePayment;                        
+            txNew.vout[0].nValue = blockValue - masternodePayment - devFund;
         }
 
         CTxDestination address1;
