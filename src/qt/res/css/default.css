@@ -1065,7 +1065,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1089,7 +1089,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1113,7 +1113,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1137,7 +1137,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1161,7 +1161,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1198,7 +1198,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1216,7 +1216,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1234,7 +1234,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1252,7 +1252,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1281,7 +1281,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:26px;
     font-weight:normal;
-    color:#fffffff;
+    color:#ffffff;
     }
     
     QWidget .QFrame#frame_CombinedBalances .QLabel#labelzBalanceTextz { /* Available zCDZC Label */
@@ -1298,7 +1298,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
     font-weight:bold;
-    color:#fffffff;
+    color:#ffffff;
     margin-left:0px;
     }
     
@@ -1316,7 +1316,7 @@ WalletFrame {
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:26px;
     font-weight:normal;
-    color:#fffffff;
+    color:#ffffff;
     }
     
     /**************************** RECENT TRANSACTIONS ***************************************/

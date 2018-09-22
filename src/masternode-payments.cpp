@@ -362,9 +362,11 @@ void CMasternodePayments::FillBlockPayee(CMutableTransaction& txNew, int64_t nFe
             txNew.vout[i - 1].nValue -= (masternodePayment + devFund);
             
             if (devFund > 0) {
-                txNew.vout.resize(i + 2);
-                txNew.vout[i + 1].scriptPubKey = GetScriptForDestination(Params().GetDevFundAddress().Get());
-                txNew.vout[i + 1].nValue = devFund;
+                //txNew.vout.resize(i + 2);
+                //txNew.vout[i + 1].scriptPubKey = GetScriptForDestination(Params().GetDevFundAddress().Get());
+                //txNew.vout[i + 1].nValue = devFund;
+                
+                txNew.vout.push_back(CTxOut(devFund, GetScriptForDestination(Params().GetDevFundAddress().Get())));
             }
             
         } else {
