@@ -95,6 +95,14 @@ OptionsDialog::OptionsDialog(QWidget* parent, bool enableWallet) : QDialog(paren
     ui->preferredDenom->addItem(QString("1000"), QVariant("1000"));
     ui->preferredDenom->addItem(QString("5000"), QVariant("5000"));
 
+    /*temporary hide zerocoin*/
+    ui->checkBoxZeromintEnable->hide();
+    ui->zeromintPercentage->hide();
+    ui->preferredDenom->hide();
+    ui->percentage_label->hide();
+    ui->labelPreferredDenom->hide();
+    
+    
     /* Theme selector external themes */
     boost::filesystem::path pathAddr = GetDataDir() / "themes";
     QDir dir(pathAddr.string().c_str());

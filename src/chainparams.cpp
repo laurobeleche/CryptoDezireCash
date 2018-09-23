@@ -109,7 +109,7 @@ public:
         pchMessageStart[2] = 0x61;              
         pchMessageStart[3] = 0xfd;              
         vAlertPubKey = ParseHex("04952f2b5c9a14b944d545164e47bc9b2e3ad2835354d8febecef3ec8d73615b5596f02e6087ef15f093ce11fa24069cca717153d87470b3641c1aaf1471a58de8");
-        nDefaultPort = 55002;                   
+        nDefaultPort = 35601;                   
         bnProofOfWorkLimit = ~uint256(0) >> 20; // Crypto Dezire Cash starting difficulty is 1 / 2^12
         nSubsidyHalvingInterval = 210000;       // Halving interval
         nMaxReorganizationDepth = 100;          

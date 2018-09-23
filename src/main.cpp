@@ -2235,7 +2235,11 @@ CAmount GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 CAmount GetDevFundPayment(int nHeight, int64_t blockValue)
 {
     CAmount ret_val = 0;
-    ret_val = blockValue * 7 / 100; //7% of the reward while POS
+    if (nHeight <= 300104) {
+            ret_val = 0;   
+    } else {
+            ret_val = blockValue * .01;  
+    }
     return ret_val;
 }
 
