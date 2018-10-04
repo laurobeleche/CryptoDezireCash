@@ -1,4 +1,6 @@
 // Copyright (c) 2011-2013 The Bitcoin developers
+// Copyright (c) 2017 The PIVX developers
+// Copyright (c) 2018 The Crypto Dezire Cash developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -10,6 +12,13 @@ WalletModelTransaction::WalletModelTransaction(const QList<SendCoinsRecipient>& 
                                                                                               walletTransaction(0),
                                                                                               keyChange(0),
                                                                                               fee(0)
+{
+    walletTransaction = new CWalletTx();
+}
+
+WalletModelTransaction::WalletModelTransaction() : walletTransaction(0),
+                                                   keyChange(0),
+                                                   fee(0)
 {
     walletTransaction = new CWalletTx();
 }

@@ -14,12 +14,18 @@ QT_TS = \
   qt/locale/cryptodezirecash_de.ts \
   qt/locale/cryptodezirecash_en.ts \
   qt/locale/cryptodezirecash_en_US.ts \
+  qt/locale/cryptodezirecash_eo.ts \
   qt/locale/cryptodezirecash_es.ts \
+  qt/locale/cryptodezirecash_es_ES.ts \
   qt/locale/cryptodezirecash_fi.ts \
   qt/locale/cryptodezirecash_fr_FR.ts \
+  qt/locale/cryptodezirecash_hi_IN.ts \
+  qt/locale/cryptodezirecash_hr.ts \
+  qt/locale/cryptodezirecash_hr_HR.ts \
   qt/locale/cryptodezirecash_it.ts \
   qt/locale/cryptodezirecash_ja.ts \
   qt/locale/cryptodezirecash_ko_KR.ts \
+  qt/locale/cryptodezirecash_lt_LT.ts \
   qt/locale/cryptodezirecash_nl.ts \
   qt/locale/cryptodezirecash_pl.ts \
   qt/locale/cryptodezirecash_pt.ts \
@@ -30,6 +36,7 @@ QT_TS = \
   qt/locale/cryptodezirecash_sv.ts \
   qt/locale/cryptodezirecash_tr.ts \
   qt/locale/cryptodezirecash_uk.ts \
+  qt/locale/cryptodezirecash_vi.ts \
   qt/locale/cryptodezirecash_zh_CN.ts \
   qt/locale/cryptodezirecash_zh_TW.ts
 
@@ -230,6 +237,7 @@ RES_ICONS = \
   qt/res/icons/lock_closed.png \
   qt/res/icons/lock_open.png \
   qt/res/icons/masternodes.png \
+  qt/res/icons/onion.png \
   qt/res/icons/overview.png \
   qt/res/icons/qrcode.png \
   qt/res/icons/quit.png \

@@ -1655,6 +1655,12 @@ WalletFrame {
     
     }
     
+    QDialog#ZCdzcControlDialog .QTreeWidget#treeWidget { /* zCDZC Control Widget Container */
+    outline:0;
+    background-color:#ffffff;
+    border:1px solid #454545;
+    }
+
     /**************************** RECEIVE COINS *********************************************/
     
     QWidget#ReceiveCoinsDialog {
@@ -1759,6 +1765,12 @@ WalletFrame {
     background-color:#ffffff;
     }
     
+    QWidget#PrivacyDialog .QToolButton {
+    margin:2px;
+    min-height: 24px;
+    min-width: 24px;
+    }
+
     /**************************** MASTERNODE LIST *******************************************/
     QWidget#MasternodeList .QFrame#frameList {
     background-color:#0d1014;

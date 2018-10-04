@@ -1,4 +1,5 @@
 // Copyright (c) 2012-2014 The Bitcoin developers
+// Copyright (c) 2016-2017 The PIVX developers
 // Copyright (c) 2018 The Crypto Dezire Cash developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -19,7 +20,7 @@ const std::string CLIENT_NAME("Crypto Dezire Cash Core");
 /**
  * Client version number
  */
-#define CLIENT_VERSION_SUFFIX "-Vegas"
+#define CLIENT_VERSION_SUFFIX "-Dezire"
 
 
 /**

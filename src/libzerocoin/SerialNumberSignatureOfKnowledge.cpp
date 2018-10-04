@@ -11,6 +11,7 @@
 **/
 // Copyright (c) 2017 The PIVX developers
 // Copyright (c) 2018 The Crypto Dezire Cash developers
+
 #include <streams.h>
 #include "SerialNumberSignatureOfKnowledge.h"
 

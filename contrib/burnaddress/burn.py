@@ -11,8 +11,8 @@ burn-btc: create a bitcoin burn address
 By James C. Stroud
 This program requries base58 (https://pypi.python.org/pypi/base58/0.2.1).
 Call the program with a template burn address as the only argument::
-    % burn-btc Crypto Dezire CashBurnAddressBurnPremineXXXXXX
-    Crypto Dezire CashBurnAddressBurnPremineXmtXTL
+    % burn-btc DezireBurnAddressBurnPremineXXXXXX
+    DezireBurnAddressBurnPremineXmtXTL
 For instructions, call the program with no arguments::
     % burn-btc
     usage: burn-btc TEMPLATE
@@ -20,7 +20,7 @@ For instructions, call the program with no arguments::
                   the first two are coin specific
 An example template is accessible using "test" as the argument::
     % burn-btc test
-    Crypto Dezire CashBurnAddressBurnPremineXmtXTL
+    DezireBurnAddressBurnPremineXmtXTL
 Validate bitcoin burn addresses at https://explorer.cryptodezirecash.com/address/
 """
 
@@ -70,7 +70,7 @@ if __name__ == "__main__":
   if len(sys.argv) != 2:
     usage()
   if sys.argv[1] == "test":
-    template = "Crypto Dezire CashBurnAddressBurnPremineXXXXXX"
+    template = "DezireBurnAddressBurnPremineXXXXXX"
   else:
     template = sys.argv[1]
   for c in template:

@@ -29,16 +29,16 @@
   <string>????</string>
 
   <key>CFBundleExecutable</key>
-  <string>Crypto Dezire Cash-Qt</string>
+  <string>CryptoDezireCash-Qt</string>
   
   <key>CFBundleName</key>
-  <string>Crypto Dezire Cash-Qt</string>
+  <string>CryptoDezireCash-Qt</string>
 
   <key>LSHasLocalizedDisplayName</key>
   <true/>
 
   <key>CFBundleIdentifier</key>
-  <string>io.cryptodezirecash.Crypto Dezire Cash-Qt</string>
+  <string>io.cryptodezirecash.CryptoDezireCash-Qt</string>
 
   <key>CFBundleURLTypes</key>
   <array>

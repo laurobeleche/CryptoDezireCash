@@ -1,9 +1,11 @@
-// Copyright (c) 2017 The PIVX Core developers
+// Copyright (c) 2017-2018 The PIVX developers
 // Copyright (c) 2018 The Crypto Dezire Cash developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#pragma once
+#ifndef BITCOIN_UINT256_H
+#define BITCOIN_UINT256_H
+
 #include "arith_uint256.h"
 #include "uint256.h"
 
@@ -40,3 +42,5 @@ inline uint512 uint512S(const char* str)
     rv.SetHex(str);
     return rv;
 }
+
+#endif // BITCOIN_UINT512_H

@@ -1,4 +1,8 @@
+// Copyright (c) 2017-2018 The PIVX developers
 // Copyright (c) 2018 The Crypto Dezire Cash developers
+// Distributed under the MIT software license, see the accompanying
+// file COPYING or http://www.opensource.org/licenses/mit-license.php.
+
 #include "blockexplorer.h"
 #include "bitcoinunits.h"
 #include "chainparams.h"
@@ -473,7 +477,7 @@ void BlockExplorer::showEvent(QShowEvent*)
         m_History.push_back(text);
         updateNavButtons();
 
-        if (!GetBoolArg("-txindex", false)) {
+        if (!GetBoolArg("-txindex", true)) {
             QString Warning = tr("Not all transactions will be shown. To view all transactions you need to set txindex=1 in the configuration file (cryptodezirecash.conf).");
             QMessageBox::warning(this, "Crypto Dezire Cash Core Blockchain Explorer", Warning, QMessageBox::Ok);
         }

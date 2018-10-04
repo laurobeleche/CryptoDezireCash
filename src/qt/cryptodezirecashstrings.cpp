@@ -20,9 +20,6 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "single IP (e.g. 1.2.3.4), a network/netmask (e.g. 1.2.3.4/255.255.255.0) or "
 "a network/CIDR (e.g. 1.2.3.4/24). This option can be specified multiple times"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
-"An error occurred while setting up the RPC address %s port %u for listening: "
-"%s"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Bind to given address and always listen on it. Use [host]:port notation for "
 "IPv6"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
@@ -50,6 +47,9 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Delete all wallet transactions and only recover those parts of the "
 "blockchain through -rescan on startup"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Delete all zerocoin spends and mints that have been recorded to the "
+"blockchain database and reindex them (0-1, default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Disable all Crypto Dezire Cash specific functionality (Masternodes, Zerocoin, SwiftX, "
 "Budgeting) (0-1, default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
@@ -58,8 +58,12 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Enable SwiftX, show confirmations for locked transactions (bool, default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
-"Enable automatic wallet backups triggered after each zCdzc minting (0-1, "
+"Enable automatic wallet backups triggered after each zCDZC minting (0-1, "
 "default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Enable or disable staking functionality for CDZC inputs (0-1, default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Enable or disable staking functionality for zCDZC inputs (0-1, default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Enable spork administration functionality with the appropriate private key."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
@@ -67,6 +71,8 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "be solved instantly."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Error: Listening for incoming connections failed (listen returned error %s)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Error: The transaction is larger than the maximum allowed transaction size!"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Error: The transaction was rejected! This might happen if some of the coins "
 "in your wallet were already spent, such as if you used a copy of wallet.dat "
@@ -89,6 +95,11 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Execute command when the best block changes (%s in cmd is replaced by block "
 "hash)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Execute command when the best block changes and its size is over (%s in cmd "
+"is replaced by block hash, %d with the block size)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Failed to find coin set amongst held coins with less than maxNumber of Spends"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Fees (in CDZC/Kb) smaller than this are considered zero fee for relaying "
 "(default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
@@ -103,6 +114,9 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "If paytxfee is not set, include enough fee so transactions begin "
 "confirmation on average within n blocks (default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"In rare cases, a spend with 7 coins exceeds our maximum allowable "
+"transaction size, please retry spend using 6 or less coins"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "In this mode -genproclimit controls how many blocks are generated "
 "immediately."),
@@ -157,6 +171,15 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Show N confirmations for a successfully locked transaction (0-9999, default: "
 "%u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Specify custom backup path to add a copy of any automatic zCDZC backup. If "
+"set as dir, every backup generates a timestamped file. If set as file, will "
+"rewrite to that file every backup. If backuppath is set as well, 4 backups "
+"will happen"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
+"Specify custom backup path to add a copy of any wallet backup. If set as "
+"dir, every backup generates a timestamped file. If set as file, will rewrite "
+"to that file every backup."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Support filtering of blocks and transaction with bloom filters (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "SwiftX requires inputs with at least 6 confirmations, you might need to wait "
@@ -168,19 +191,6 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "This product includes software developed by the OpenSSL Project for use in "
 "the OpenSSL Toolkit <https://www.openssl.org/> and cryptographic software "
 "written by Eric Young and UPnP software written by Thomas Bernard."),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
-"To use cryptodezirecashd, or the -server option to cryptodezirecash-qt, you must set an rpcpassword "
-"in the configuration file:\n"
-"%s\n"
-"It is recommended you use the following random password:\n"
-"rpcuser=cryptodezirecashrpc\n"
-"rpcpassword=%s\n"
-"(you do not need to remember this password)\n"
-"The username and password MUST NOT be the same.\n"
-"If the file does not exist, create it with owner-readable-only file "
-"permissions.\n"
-"It is also recommended to set alertnotify so you are notified of problems;\n"
-"for example: alertnotify=echo %%s | mail -s \"Crypto Dezire Cash Alert\" admin@foo.com\n"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
 "Unable to bind to %s on this computer. Crypto Dezire Cash Core is probably already running."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", ""
@@ -233,7 +243,6 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "<category> can be:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Accept command line and JSON-RPC commands"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Accept connections from outside (default: 1 if no -proxy or -connect)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Accept public REST requests (default: %u)"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Acceptable ciphers (default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Add a node to connect to and attempt to keep the connection open"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Allow DNS lookups for -addnode, -seednode and -connect"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Already have that input."),
@@ -251,16 +260,17 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Cannot resolve -bind address: '%s'")
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Cannot resolve -externalip address: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Cannot resolve -whitebind address: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Cannot write default address"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "CoinSpend: Accumulator witness does not verify"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Collateral not valid."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Connect only to the specified node(s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Connect through SOCKS5 proxy"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Connect to a node to retrieve peer addresses, and disconnect"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Connection options:"),
-QT_TRANSLATE_NOOP("pivx-core", "Copyright (C) 2009-%i The Bitcoin Core Developers"),
-QT_TRANSLATE_NOOP("pivx-core", "Copyright (C) 2014-%i The Dash Core Developers"),
-QT_TRANSLATE_NOOP("pivx-core", "Copyright (C) 2015-%i The PIVX Core Developers"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Copyright (C) 2009-%i The Bitcoin Core Developers"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Copyright (C) 2014-%i The Dash Core Developers"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Copyright (C) 2015-%i The PIVX Core Developers"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Copyright (C) %i The Crypto Dezire Cash Core Developers"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Corrupted block database detected"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Could not parse -rpcbind value %s as network address"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Could not parse masternode.conf"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Debugging/Testing options:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Delete blockchain folders and resync from scratch"),
@@ -292,18 +302,26 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error loading wallet.dat: Wallet req
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error opening block database"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error reading from database, shutting down."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error recovering public key."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error writing zerocoinDB to disk"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: A fatal internal error occured, see debug.log for details"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: A fatal internal error occurred, see debug.log for details"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: Can't select current denominated inputs"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: Disk space is low!"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: No valid utxo!"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: Unsupported argument -tor found, use -onion."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: Wallet locked, unable to create transaction!"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Error: You already have pending entries in the Obfuscation pool"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to calculate accumulator checkpoint"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to create mint"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to deserialize"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to find Zerocoins in wallet.dat"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to listen on any port. Use -listen=0 if you want this."),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to read block index"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to parse host:port string"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to read block"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to write block index"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to select a zerocoin"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to wipe zerocoinDB"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Failed to write coin serial number into wallet"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Fee (in CDZC/kB) to add to transactions you send (default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Finalizing transaction."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Force safe mode (default: %u)"),
@@ -324,7 +342,6 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Input is not valid."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Insufficient funds"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Insufficient funds."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Invalid -onion address or hostname: '%s'"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Invalid -proxy address or hostname: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Invalid amount for -maxtxfee=<amount>: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Invalid amount for -minrelaytxfee=<amount>: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Invalid amount for -mintxfee=<amount>: '%s'"),
@@ -352,16 +369,20 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Loading masternode payment cache..."
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Loading sporks..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Loading wallet... (%3.2f %%)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Loading wallet..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Location of the auth cookie (default: data dir)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Lock is already in place."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Lock masternodes from masternode configuration file (default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Lookup(): Invalid -proxy address or hostname: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Maintain at most <n> connections to peers (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Masternode options:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Masternode queue is full."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Masternode:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Maximum per-connection receive buffer, <n>*1000 bytes (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Maximum per-connection send buffer, <n>*1000 bytes (default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Mint did not make it into blockchain"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Missing input transaction information."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Mixing in progress..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Need address because change is not exact"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Need to specify a port with -whitebind: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "No Masternodes detected."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "No compatible Masternode found."),
@@ -373,6 +394,7 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Not compatible with existing transac
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Not enough file descriptors available."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Not in the Masternode list."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Number of automatic wallet backups (default: 10)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Number of custom location backups to retain (default: %d)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Obfuscation is idle."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Obfuscation request complete:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Obfuscation request incomplete:"),
@@ -380,20 +402,19 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Only accept block chain matching bui
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Only connect to nodes in network <net> (ipv4, ipv6 or onion)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Options:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Password for JSON-RPC connections"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Percentage of automatically minted Zerocoin  (10-100, default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Percentage of automatically minted Zerocoin  (1-100, default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Preparing for resync..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Prepend debug output with timestamp (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Print version and exit"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "RPC SSL options: (see the Bitcoin Wiki for SSL setup instructions)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "RPC server options:"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "RPC support for HTTP persistent connections (default: %d)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Randomly drop 1 of every <n> network messages"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Randomly fuzz 1 of every <n> network messages"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Rebuild block chain index from current blk000??.dat files"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Recalculating coin supply may take 30-60 minutes..."),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Recalculating supply statistics may take 30-60 minutes..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Receive and display P2P network alerts (default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Reindex the CDZC and zCDZC money supply statistics"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Reindex the accumulator database"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Reindexing zerocoin database..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Reindexing zerocoin failed"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Relay and mine data carrier transactions (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Relay non-P2SH multisig (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Rescan the block chain for missing wallet transactions"),
@@ -402,9 +423,8 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "ResetMintZerocoin finished: "),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "ResetSpentZerocoin finished: "),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Run a thread to flush wallet periodically (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Run in the background as a daemon and accept commands"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Selected coins value is less than payment target"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Send transactions as zero-fee transactions if possible (default: %u)"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Server certificate file (default: %s)"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Server private key (default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Session not complete!"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Session timed out."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Set database cache size in megabytes (%d to %d, default: %d)"),
@@ -428,6 +448,7 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Specify masternode configuration fil
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Specify pid file (default: %s)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Specify wallet file (within data directory)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Specify your own public address"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Spend Valid"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Spend unconfirmed change when sending transactions (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Staking options:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Stop running after importing blocks from disk (default: %u)"),
@@ -442,13 +463,21 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Synchronizing budgets..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Synchronizing masternode winners..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Synchronizing masternodes..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Synchronizing sporks..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Syncing zCDZC wallet..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "The coin spend has been used"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "The new spend coin transaction did not verify"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "The selected mint coin is an invalid coin"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "The transaction did not verify"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "This help message"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "This is experimental software."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "This is intended for regression testing tools and app development."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "This is not a Masternode."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Threshold for disconnecting misbehaving peers (default: %u)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Too many spends needed"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Tor control port password (default: empty)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Tor control port to use if onion listening enabled (default: %s)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction Created"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction Mint Started"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction amount too small"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction amounts must be positive"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction created successfully."),
@@ -457,20 +486,25 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction not valid."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction too large for fee policy"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transaction too large"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Transmitting final transaction."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Try to spend with a higher security level to include more coins"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Trying to spend an already spent serial #, try again."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unable to bind to %s on this computer (bind returned error %s)"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unable to find transaction containing mint"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unable to sign spork message, wrong key?"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unable to start HTTP server. See debug log for details."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unknown network specified in -onlynet: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Unknown state: id = %u"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Upgrade wallet to latest format"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "Use OpenSSL (https) for JSON-RPC connections"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Use UPnP to map the listening port (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Use UPnP to map the listening port (default: 1 when listening)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Use a custom max chain reorganization depth (default: %u)"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Use the test network"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Username for JSON-RPC connections"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Value is below the smallest available denomination (= 1) of zCDZC"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Value more than Obfuscation pool maximum allows."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Verifying blocks..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Verifying wallet..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "Version 1 zCDZC require a security level of 100 to successfully spend."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Wallet %s resides outside data directory %s"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Wallet is locked."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Wallet needed to be rewritten: restart Crypto Dezire Cash Core to complete"),
@@ -481,13 +515,14 @@ QT_TRANSLATE_NOOP("cryptodezirecash-core", "Warning: This version is obsolete, u
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Warning: Unsupported argument -benchmark ignored, use -debug=bench."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Warning: Unsupported argument -debugnet ignored, use -debug=net."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Will retry..."),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "You don't have enough Zerocoins in your wallet"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "You need to rebuild the database using -reindex to change -txindex"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Your entries added successfully."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Your transaction was accepted into the pool!"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Zapping all transactions from wallet..."),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "ZeroMQ notification options:"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "Zerocoin options:"),
-QT_TRANSLATE_NOOP("cryptodezirecash-core", "failed to validate zerocoin"),
+QT_TRANSLATE_NOOP("cryptodezirecash-core", "isValid(): Invalid -proxy address or hostname: '%s'"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "on startup"),
 QT_TRANSLATE_NOOP("cryptodezirecash-core", "wallet.dat corrupt, salvage failed"),
 };
