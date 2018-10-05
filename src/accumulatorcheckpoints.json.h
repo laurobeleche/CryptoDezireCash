@@ -6,9 +6,6 @@
 #ifndef CRYPTODEZIRECASH_ACCUMULATORCHECKPOINTS_JSON_H
 #define CRYPTODEZIRECASH_ACCUMULATORCHECKPOINTS_JSON_H
 
-
-
-#endif //CRYPTODEZIRECASH_ACCUMULATORCHECKPOINTS_JSON_H
 include <string>
 std::string GetMainCheckpoints() {
     std::string strMainCheckpoints = "[\n"
@@ -282,3 +279,4 @@ std::string GetRegTestCheckpoints() {
             "]";
     return strRegTestCheckpoints;
 }
+#endif //CRYPTODEZIRECASH_ACCUMULATORCHECKPOINTS_JSON_H
