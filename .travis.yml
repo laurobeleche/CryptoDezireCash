@@ -7,6 +7,9 @@ cache:
   - depends/built
   - depends/sdk-sources
   - $HOME/.ccache
+stages:
+  - lint
+  - test
 env:
   global:
     - MAKEJOBS=-j3
@@ -71,6 +74,30 @@ script:
 after_script:
     - echo $TRAVIS_COMMIT_RANGE
     - echo $TRAVIS_COMMIT_LOG
+
+jobs:
+  include:
+    - stage: lint
+      sudo: false
+      cache: false
+      addons:
+        apt:
+          packages:
+            - python3-pip
+            - shellcheck
+      install:
+        - travis_retry pip3 install flake8 --user
+      before_script:
+        - git fetch --unshallow
+      script:
+        #- contrib/devtools/git-subtree-check.sh src/univalue
+        # Remove this comment and the `#` from the following two lines when we merge proper subtree implementations for secp256k1 and leveldb
+        #- contrib/devtools/git-subtree-check.sh src/secp256k1
+        #- contrib/devtools/git-subtree-check.sh src/leveldb
+        #- contrib/devtools/check-doc.py
+        #- contrib/devtools/logprint-scanner.py
+        #- if [ "$TRAVIS_EVENT_TYPE" = "pull_request" ]; then contrib/devtools/lint-whitespace.sh; fi
+
 after_success:
     - chmod +x $TRAVIS_BUILD_DIR/contrib/travis-artifacts/collect-artifacts.sh
     - $TRAVIS_BUILD_DIR/contrib/travis-artifacts/collect-artifacts.sh $TRAVIS_BUILD_DIR $OUTDIR build $TRAVIS_COMMIT $HOST
