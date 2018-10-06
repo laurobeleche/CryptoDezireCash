@@ -597,7 +597,7 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
                 LOCK(cs_vNodes);
                 fvNodesEmpty = vNodes.empty();
             }
-            		    LogPrintf("BitcoinMiner:: fvNodesEmpty: %d, IsInitialBlockDownload(): %d......................\n", fvNodesEmpty, IsInitialBlockDownload());
+            //LogPrintf("BitcoinMiner:: fvNodesEmpty: %d, IsInitialBlockDownload(): %d......................\n", fvNodesEmpty, IsInitialBlockDownload());
             if ((!fvNodesEmpty && !IsInitialBlockDownload()) || !Params().MiningRequiresPeers())
                 break;
             MilliSleep(1000);
