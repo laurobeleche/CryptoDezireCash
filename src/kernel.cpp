@@ -300,9 +300,12 @@ bool Stake(CStakeInput* stakeInput, unsigned int nBits, unsigned int nTimeBlockF
     if (nTimeTx < nTimeBlockFrom)
         return error("CheckStakeKernelHash() : nTime violation");
 
-    if (nTimeBlockFrom + nStakeMinAge > nTimeTx) // Min age requirement
-        return error("CheckStakeKernelHash() : min age violation - nTimeBlockFrom=%d nStakeMinAge=%d nTimeTx=%d",
-                     nTimeBlockFrom, nStakeMinAge, nTimeTx);
+    if (nTimeBlockFrom + nStakeMinAge > nTimeTx) { // Min age requirement
+        if (fDebug)
+            LogPrint("%s : min age violation - nTimeBlockFrom=%d nStakeMinAge=%d nTimeTx=%d",
+                     __func__, nTimeBlockFrom, nStakeMinAge, nTimeTx);
+        return false;
+    }
 
     //grab difficulty
     uint256 bnTargetPerCoinDay;

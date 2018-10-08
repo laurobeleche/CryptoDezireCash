@@ -178,9 +178,12 @@ public:
         assert(hashGenesisBlock == uint256("0x000005b30531c8d540e58a1a85afb65ab44028cf68f0b3d299565c9d41c3778b"));
         assert(genesis.hashMerkleRoot == uint256("0x4cc63d4be53fe2310024ff7137a755d5504abf9e94e95740288862aaa385e193"));
 
-        //vSeeds.push_back(CDNSSeedData("1", "main.seederv1.cdzc.host"));      // Crypto Dezire Cash's official seed 1
-        vFixedSeeds.clear();
-        vSeeds.clear();
+        vSeeds.push_back(CDNSSeedData("1", "seed01.cryptodezirecash.com"));      // Crypto Dezire Cash's official seed 1
+        vSeeds.push_back(CDNSSeedData("2", "seed02.cryptodezirecash.com"));      // Crypto Dezire Cash's official seed 2
+        vSeeds.push_back(CDNSSeedData("3", "seed03.cryptodezirecash.com"));      // Crypto Dezire Cash's official seed 3
+        vSeeds.push_back(CDNSSeedData("4", "149.28.236.40"));
+        vSeeds.push_back(CDNSSeedData("5", "149.28.61.241"));
+        vSeeds.push_back(CDNSSeedData("6", "139.180.207.56"));
         
         // Crypto Dezire Cash addresses start with 'D'
         base58Prefixes[PUBKEY_ADDRESS] = std::vector<unsigned char>(1, 30);
