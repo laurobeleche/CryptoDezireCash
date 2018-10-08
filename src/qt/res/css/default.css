@@ -108,12 +108,9 @@ WalletFrame {
     color:#fff;
     }
     
-    QMessageBox {
-    background-color:#fff;
-    }
-    
     QMessageBox  QLabel {
-        color:#000; 
+        color:#500000; 
+        background-color:  transparent;
     }
     
     QProgressBar {
@@ -749,9 +746,13 @@ WalletFrame {
     
     
     QWidget#PrivacyDialog QFrame {
-    background-color:transparent;
+    background-color: #0d1014;
     border:0px solid #000;
     }
+    
+   QWidget#PrivacyDialog QMessageBox QLabel {
+       background-color:#fff;
+   }
     
     QWidget#PrivacyDialog QFrame#labelMintStatus {
     background-color:#eee;
@@ -1749,6 +1750,10 @@ WalletFrame {
     /* QDialog#PrivacyDialog */
     /* QWidget#PrivacyDialog */
     
+    QWidget#PrivacyDialog {
+    background-color:#0d1014;
+    }
+    
     QWidget#PrivacyDialog .QFrame[frameShape="4"] { /* QFrame::HLine == 0x0004 */
     border:1px solid #500000;
     }
@@ -1758,11 +1763,11 @@ WalletFrame {
     }
     
     QWidget#PrivacyDialog .QFrame#verticalFrameLeft {
-    background-color:#ffffff;
+    background-color:#0d1014;
     }
     
     QWidget#PrivacyDialog .QFrame#verticalFrameRight {
-    background-color:#ffffff;
+    background-color:#0d1014;
     }
     
     QWidget#PrivacyDialog .QToolButton {
