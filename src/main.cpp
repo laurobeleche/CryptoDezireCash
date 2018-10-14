@@ -1891,30 +1891,10 @@ CAmount GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 
     if (nHeight < 101) {
         ret = 0; 
-    } else if (nHeight <= 50101) {
-            ret = blockValue * .75;   //1.5
-    } else if (nHeight <= 100102) {
-            ret = blockValue * .75;   //2.25
     } else if (nHeight <= 200103) {
-            ret = blockValue * .75;   //3
-    } else if (nHeight <= 300104) {
-            ret = blockValue * .74;   //3.7
-    } else if (nHeight <= 400105) {
-            ret = blockValue * .733;   //4.4
-    } else if (nHeight <= 500106) {
-            ret = blockValue * .74;   //5.18
-    } else if (nHeight <= 600107) {
-            ret = blockValue * .74;   //5.92
-    } else if (nHeight <= 700108) {
-            ret = blockValue * .74;   //6.66
-    } else if (nHeight <= 1000109) {
-            ret = blockValue * .74;   //7.4
-    } else if (nHeight <= 1100110) {
-            ret = blockValue * .74;   //6.66
-    } else if (nHeight <= 1200111) {
-            ret = blockValue * .74;   //5.92
+            ret = blockValue * .75; 
     } else {
-            ret = blockValue * .74;   //5.18
+            ret = blockValue * .74;  
     } 
     
     return ret;
@@ -1923,7 +1903,7 @@ CAmount GetMasternodePayment(int nHeight, int64_t blockValue, int nMasternodeCou
 CAmount GetDevFundPayment(int nHeight, int64_t blockValue)
 {
     CAmount ret_val = 0;
-    if (nHeight <= 200104) {
+    if (nHeight <= 200103) {
             ret_val = 0;   
     } else {
             ret_val = blockValue * .01;  

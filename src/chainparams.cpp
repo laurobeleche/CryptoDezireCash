@@ -56,11 +56,13 @@ static void convertSeed6(std::vector<CAddress>& vSeedsOut, const SeedSpec6* data
 static Checkpoints::MapCheckpoints mapCheckpoints =
     boost::assign::map_list_of
     // Crypto Dezire CashDevs - RELEASE CHANGE - Checkpoins, timestamp of last checkpoint, total nr. of transactions
-    (       0, uint256("0x000005b30531c8d540e58a1a85afb65ab44028cf68f0b3d299565c9d41c3778b"));         // Last block 1.5.0
+    (       0, uint256("0x000005b30531c8d540e58a1a85afb65ab44028cf68f0b3d299565c9d41c3778b"))
+    (    2050, uint256("0x374d6830d494c51084841d45de48ef166d11dd3f82fd11efdba875d055ba737c"))
+    ; 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1536963897, // * UNIX timestamp of last checkpoint block
-    0,          // * total number of transactions between genesis and last checkpoint
+    1539301370, // * UNIX timestamp of last checkpoint block
+    3170,          // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     5000        // * estimated number of transactions per day after checkpoint
 };
@@ -207,7 +209,7 @@ public:
 
         nPoolMaxTransactions = 3;
         strSporkKey = "04d2a5771615912d458666118ec1e3901178fc0030b189b8322278f9e6e80a17f6f6b0c86ff3efe97e0095ee1d38f7f3febb97d5c0b05c5cb09a9ec350b0d95777";
-        strObfuscationPoolDummyAddress = "WWqou25edpCatoZgSxhd3dpNbhn3dxh21D";
+        strObfuscationPoolDummyAddress = "D8UpqQyNprLXf1B89WdM9p4jvTGV7FuuXD";
         nStartMasternodePayments = 1518696182; // GMT: Thursday, 15. February 2018 12:03:02
 
         /** Zerocoin */
@@ -234,7 +236,7 @@ public:
     }
     
     CBitcoinAddress GetDevFundAddress() const
-    { return CBitcoinAddress("DR9tvZAZMMSgxJU7iLY6S9vwdg83VvWpUR"); }
+    { return CBitcoinAddress("D8UpqQyNprLXf1B89WdM9p4jvTGV7FuuXD"); }
     
     int64_t GetMinStakeAge(int nTargetHeight) const
     {
