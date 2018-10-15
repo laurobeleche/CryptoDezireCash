@@ -1,7 +1,7 @@
 Crypto Dezire Cash Core integration/staging repository
 =====================================
 
-[![Build Status](https://travis-ci.org/cryptodezire/CryptoDezireCash.svg?branch=master)](https://travis-ci.org/cryptodezire/CryptoDezireCash) [![GitHub version](https://badge.fury.io/gh/cryptodezirecash%2Fcryptodezirecash.svg)]
+[![Build Status](https://travis-ci.org/cryptodezire/CryptoDezireCash.svg?branch=master)](https://travis-ci.org/cryptodezire/CryptoDezireCash)
 
 Crypto Dezire Cash is a cutting edge cryptocurrency, with many features not available in most other cryptocurrencies.
 - Fast transactions featuring guaranteed zero confirmation transactions, we call it _SwiftX_.
