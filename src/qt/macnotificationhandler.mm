@@ -15,7 +15,7 @@
 - (NSString *)__bundleIdentifier
 {
     if (self == [NSBundle mainBundle]) {
-        return @"io.cryptodezirecash.Crypto Dezire Cash-Qt";
+        return @"io.cryptodezirecash.CryptoDezireCash-Qt";
     } else {
         return [self __bundleIdentifier];
     }
