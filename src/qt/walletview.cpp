@@ -37,10 +37,6 @@
 #include <QSettings>
 #include <QVBoxLayout>
 
-#include <cstdio>
-#include <boost/algorithm/string.hpp>
-#include <boost/assign/list_of.hpp>
-
 WalletView::WalletView(QWidget* parent) : QStackedWidget(parent),
                                           clientModel(0),
                                           walletModel(0)

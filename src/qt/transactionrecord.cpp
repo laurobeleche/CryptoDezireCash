@@ -15,11 +15,6 @@
 #include "zcdzcchain.h"
 
 #include <stdint.h>
-#include <boost/thread.hpp>
-#include <boost/tuple/tuple.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/assign/list_of.hpp>
-#include <boost/algorithm/hex.hpp>
 
 /* Return positive answer if transaction should be shown in list.
  */
@@ -251,7 +246,7 @@ QList<TransactionRecord> TransactionRecord::decomposeTransaction(const CWallet* 
             sub.credit = nCredit - nChange;
             parts.append(sub);
             parts.last().involvesWatchAddress = involvesWatchAddress; // maybe pass to TransactionRecord as constructor argument
-        } else if (fAllFromMe) {
+        } else if (fAllFromMe || wtx.IsZerocoinMint()) {
             //
             // Debit
             //
