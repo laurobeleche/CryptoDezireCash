@@ -54,7 +54,7 @@ static const int MAX_URI_LENGTH = 255;
 
 #define QAPP_ORG_NAME "CRYPTODEZIRECASH"
 #define QAPP_ORG_DOMAIN "cryptodezirecash.com"
-#define QAPP_APP_NAME_DEFAULT "CRYPTODEZIRECASH-Qt"
-#define QAPP_APP_NAME_TESTNET "CRYPTODEZIRECASH-Qt-testnet"
+#define QAPP_APP_NAME_DEFAULT "CryptoDezireCash-Qt"
+#define QAPP_APP_NAME_TESTNET "CryptoDezireCash-Qt-testnet"
 
 #endif // BITCOIN_QT_GUICONSTANTS_H
