@@ -16,7 +16,7 @@ More information at [cryptodezire.com](https://cryptodezire.com/) Visit our ANN 
 <tr><td>Algo</td><td>Quark</td></tr>
 <tr><td>Block Time</td><td>120 Seconds</td></tr>
 <tr><td>Difficulty Retargeting</td><td>Every Block</td></tr>
-<tr><td>Max Coin Supply (PoW Phase)</td><td>601,800 CDZC</td></tr>
+<tr><td>Max Coin Supply (PoW Phase)</td><td>1000 CDZC</td></tr>
 <tr><td>Max Coin Supply (PoS Phase)</td><td>21,000,000</td></tr>
 <tr><td>Premine in block 1</td><td>600,000 CDZC*</td></tr>
 </table>
@@ -26,7 +26,7 @@ More information at [cryptodezire.com](https://cryptodezire.com/) Visit our ANN 
 <table>
 <th colspan=4>PoW Phase</th>
 <tr><th>Block Height</th><th>Reward Amount</th><th>Notes</th><th>Duration (Days)</th></tr>
-<tr><td>1</td><td>600,000 CDZC</td><td>Initial Premine</td><td>0 Days</td></tr>
+<tr><td>1</td><td>1001 CDZC</td><td>Initial Premine</td><td>0 Days</td></tr>
 <tr><td>2-101</td><td>0 CDZC</td><td rowspan=2>Closed Mining</td><td rowspan=2> Approx 2 Days</td></tr>
 <tr><td>102-1001</td><td>2 CDZC</td></tr>
 <tr><th colspan=4>PoS Phase</th></tr>
