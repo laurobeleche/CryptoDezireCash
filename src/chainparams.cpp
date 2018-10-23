@@ -58,11 +58,12 @@ static Checkpoints::MapCheckpoints mapCheckpoints =
     // Crypto Dezire CashDevs - RELEASE CHANGE - Checkpoins, timestamp of last checkpoint, total nr. of transactions
     (       0, uint256("0x000005b30531c8d540e58a1a85afb65ab44028cf68f0b3d299565c9d41c3778b"))
     (    2050, uint256("0x374d6830d494c51084841d45de48ef166d11dd3f82fd11efdba875d055ba737c"))
+    (   18950, uint256("0xb60b35097e6e201ca9d69d6dafe013ad50c53d402bee88701d93da7f535a9593"))
     ; 
 static const Checkpoints::CCheckpointData data = {
     &mapCheckpoints,
-    1539301370, // * UNIX timestamp of last checkpoint block
-    3170,          // * total number of transactions between genesis and last checkpoint
+    1540328370, // * UNIX timestamp of last checkpoint block
+    37152,      // * total number of transactions between genesis and last checkpoint
                 //   (the tx=... number in the SetBestChain debug.log lines)
     5000        // * estimated number of transactions per day after checkpoint
 };
