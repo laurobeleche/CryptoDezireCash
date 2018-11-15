@@ -2888,14 +2888,14 @@ bool ConnectBlock(const CBlock& block, CValidationState& state, CBlockIndex* pin
     LogPrint("bench", "      - Connect %u transactions: %.2fms (%.3fms/tx, %.3fms/txin) [%.2fs]\n", (unsigned)block.vtx.size(), 0.001 * (nTime1 - nTimeStart), 0.001 * (nTime1 - nTimeStart) / block.vtx.size(), nInputs <= 1 ? 0 : 0.001 * (nTime1 - nTimeStart) / (nInputs - 1), nTimeConnect * 0.000001);
 
     //PoW phase redistributed fees to miner. PoS stage destroys fees.
-    CAmount nExpectedMint = GetBlockValue(pindex->pprev->nHeight);
+    CAmount nExpectedMint = GetBlockValue(pindex->nHeight);
     if (block.IsProofOfWork())
         nExpectedMint += nFees;
 
     //Check that the block does not overmint
     if (!IsBlockValueValid(block, nExpectedMint, pindex->nMint)) {
-        return state.DoS(100, error("ConnectBlock() : reward pays too much (actual=%s vs limit=%s)",
-                                    FormatMoney(pindex->nMint), FormatMoney(nExpectedMint)),
+        return state.DoS(100, error("ConnectBlock() : reward pays too much (actual=%s vs limit=%s) Height:%d",
+                                    FormatMoney(pindex->nMint), FormatMoney(nExpectedMint), pindex->nHeight),
                          REJECT_INVALID, "bad-cb-amount");
     }
 
@@ -3938,9 +3938,9 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
         if (nHeight > Params().LAST_POW_BLOCK()) {
             CTransaction tx = block.vtx[1];
             if (!tx.vout[1].IsZerocoinMint()) {
-                CAmount nBlockValue = GetBlockValue(nHeight - 1);
-                CAmount nDevFundValue = GetDevFundPayment(nHeight - 1, nBlockValue);
-                CAmount nMasternodeValue = GetMasternodePayment(nHeight - 1, nBlockValue, 0, false);
+                CAmount nBlockValue = GetBlockValue(nHeight);
+                CAmount nDevFundValue = GetDevFundPayment(nHeight, nBlockValue);
+                CAmount nMasternodeValue = GetMasternodePayment(nHeight, nBlockValue, 0, false);
                 int nIndex = (nDevFundValue > 0) ? (tx.vout.size() -2) : (tx.vout.size() -1);
 
                 if (tx.vout[nIndex].nValue != nMasternodeValue) {
