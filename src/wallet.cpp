@@ -1318,7 +1318,7 @@ CAmount CWalletTx::GetLockedWatchOnlyCredit() const
         }
 
         // Add masternode collaterals which are handled likc locked coins
-        if (fMasterNode && vout[i].nValue == Params().GetRequiredMasternodeCollateral()) {
+        else if (fMasterNode && vout[i].nValue == Params().GetRequiredMasternodeCollateral()) {
             nCredit += pwallet->GetCredit(txout, ISMINE_WATCH_ONLY);
         }
 
