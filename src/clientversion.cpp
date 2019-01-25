@@ -1,4 +1,4 @@
-// Copyright (c) 2012-2014 The Bitcoin developers
+// Copyright (c) 2012-2017 The Bitcoin Core developers
 // Copyright (c) 2016-2017 The PIVX developers
 // Copyright (c) 2018 The Crypto Dezire Cash developers
 // Distributed under the MIT software license, see the accompanying
@@ -44,10 +44,10 @@ const std::string CLIENT_NAME("Crypto Dezire Cash Core");
 #include "build.h"
 #endif
 
-//! git will put "#define GIT_ARCHIVE 1" on the next line inside archives.
+//! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. $Format:%n#define GIT_ARCHIVE 1$
 #ifdef GIT_ARCHIVE
-#define GIT_COMMIT_ID "5ab3cc3"
-#define GIT_COMMIT_DATE "Mon Feb 25 22:43:34 2018 +0100"
+#define GIT_COMMIT_ID "$Format:%H$"
+#define GIT_COMMIT_DATE "$Format:%cD$"
 #endif
 
 #define BUILD_DESC_WITH_SUFFIX(maj, min, rev, build, suffix) \
