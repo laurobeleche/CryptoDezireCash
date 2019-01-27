@@ -254,23 +254,13 @@ bool CWallet::LoadMultiSig(const CScript& dest)
 
 bool CWallet::Unlock(const SecureString& strWalletPassphrase, bool anonymizeOnly)
 {
-    SecureString strWalletPassphraseFinal;
-
-    if (!IsLocked()) {
-        fWalletUnlockAnonymizeOnly = anonymizeOnly;
-        return true;
-    }
-
-    strWalletPassphraseFinal = strWalletPassphrase;
-
-
     CCrypter crypter;
     CKeyingMaterial vMasterKey;
 
     {
         LOCK(cs_wallet);
         BOOST_FOREACH (const MasterKeyMap::value_type& pMasterKey, mapMasterKeys) {
-            if (!crypter.SetKeyFromPassphrase(strWalletPassphraseFinal, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
+            if (!crypter.SetKeyFromPassphrase(strWalletPassphrase, pMasterKey.second.vchSalt, pMasterKey.second.nDeriveIterations, pMasterKey.second.nDerivationMethod))
                 return false;
             if (!crypter.Decrypt(pMasterKey.second.vchCryptedKey, vMasterKey))
                 continue; // try another master key
@@ -773,6 +763,26 @@ isminetype CWallet::IsMine(const CTxIn& txin) const
     return ISMINE_NO;
 }
 
+bool CWallet::IsUsed(const CBitcoinAddress address) const
+{
+    LOCK(cs_wallet);
+    CScript scriptPubKey = GetScriptForDestination(address.Get());
+    if (!::IsMine(*this, scriptPubKey)) {
+        return false;
+    }
+
+    for (map<uint256, CWalletTx>::const_iterator it = mapWallet.begin(); it != mapWallet.end(); ++it) {
+        const CWalletTx& wtx = (*it).second;
+        if (wtx.IsCoinBase()) {
+            continue;
+        }
+        for (const CTxOut& txout : wtx.vout) {
+            if (txout.scriptPubKey == scriptPubKey)
+                return true;
+        }
+    }
+    return false;
+}
 bool CWallet::IsMyZerocoinSpend(const CBigNum& bnSerial) const
 {
     return zcdzcTracker->HasSerial(bnSerial);
@@ -2963,10 +2973,11 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
     if (GetAdjustedTime() - chainActive.Tip()->GetBlockTime() < 60)
         MilliSleep(10000);
 
-    CAmount nCredit = 0;
+    CAmount nCredit;
     CScript scriptPubKeyKernel;
     bool fKernelFound = false;
     for (std::unique_ptr<CStakeInput>& stakeInput : listInputs) {
+        nCredit = 0;
         // Make sure the wallet is unlocked and shutdown hasn't been requested
         if (IsLocked() || ShutdownRequested())
             return false;
@@ -3034,7 +3045,6 @@ bool CWallet::CreateCoinStake(const CKeyStore& keystore, unsigned int nBits, int
                 LogPrintf("%s : failed to create TxIn\n", __func__);
                 txNew.vin.clear();
                 txNew.vout.clear();
-                nCredit = 0;
                 continue;
             }
             txNew.vin.emplace_back(in);
@@ -4087,6 +4097,7 @@ void CWallet::AutoCombineDust()
     //coins are sectioned by address. This combination code only wants to combine inputs that belong to the same address
     for (map<CBitcoinAddress, vector<COutput> >::iterator it = mapCoinsByAddress.begin(); it != mapCoinsByAddress.end(); it++) {
         vector<COutput> vCoins, vRewardCoins;
+        bool maxSize = false;
         vCoins = it->second;
 
         // We don't want the tx to be refused for being too large
@@ -4100,7 +4111,7 @@ void CWallet::AutoCombineDust()
             if (!out.fSpendable)
                 continue;
             //no coins should get this far if they dont have proper maturity, this is double checking
-            if (out.tx->IsCoinStake() && out.tx->GetDepthInMainChain() < COINBASE_MATURITY + 1)
+            if (out.tx->IsCoinStake() && out.tx->GetDepthInMainChain() < Params().COINBASE_MATURITY() + 1)
                 continue;
 
             COutPoint outpt(out.tx->GetHash(), out.i);
@@ -4114,8 +4125,10 @@ void CWallet::AutoCombineDust()
 
             // Around 180 bytes per input. We use 190 to be certain
             txSizeEstimate += 190;
-            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200)
+            if (txSizeEstimate >= MAX_STANDARD_TX_SIZE - 200) {
+                maxSize = true;
                 break;
+            }
         }
 
         //if no inputs found then return
@@ -4153,7 +4166,7 @@ void CWallet::AutoCombineDust()
         }
 
         //we don't combine below the threshold unless the fees are 0 to avoid paying fees over fees over fees
-        if (nTotalRewardsValue < nAutoCombineThreshold * COIN && nFeeRet > 0)
+        if (!maxSize && nTotalRewardsValue < nAutoCombineThreshold * COIN && nFeeRet > 0)
             continue;
 
         if (!CommitTransaction(wtx, keyChange)) {
@@ -4573,12 +4586,12 @@ bool CWallet::MintToTxIn(CZerocoinMint zerocoinSelected, int nSecurityLevel, con
 
     bool isV1Coin = libzerocoin::ExtractVersionFromSerial(zerocoinSelected.GetSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
     libzerocoin::ZerocoinParams* paramsCoin = Params().Zerocoin_Params(isV1Coin);
-    LogPrint("zero", "%s: *** using v1 coin params=%b, using v1 acc params=%b\n", __func__, isV1Coin, chainActive.Height() < Params().Zerocoin_Block_V2_Start());
+    //LogPrintf("%s: *** using v1 coin params=%b, using v1 acc params=%b\n", __func__, isV1Coin, chainActive.Height() < Params().Zerocoin_Block_V2_Start());
 
     // 2. Get pubcoin from the private coin
     libzerocoin::CoinDenomination denomination = zerocoinSelected.GetDenomination();
     libzerocoin::PublicCoin pubCoinSelected(paramsCoin, zerocoinSelected.GetValue(), denomination);
-    LogPrint("zero", "%s : selected mint %s\n pubcoinhash=%s\n", __func__, zerocoinSelected.ToString(), GetPubCoinHash(zerocoinSelected.GetValue()).GetHex());
+    //LogPrintf("%s : selected mint %s\n pubcoinhash=%s\n", __func__, zerocoinSelected.ToString(), GetPubCoinHash(zerocoinSelected.GetValue()).GetHex());
     if (!pubCoinSelected.validate()) {
         receipt.SetStatus(_("The selected mint coin is an invalid coin"), ZCDZC_INVALID_COIN);
         return false;
@@ -4595,7 +4608,7 @@ bool CWallet::MintToTxIn(CZerocoinMint zerocoinSelected, int nSecurityLevel, con
     }
 
     // Construct the CoinSpend object. This acts like a signature on the transaction.
-    libzerocoin::PrivateCoin privateCoin(paramsCoin, denomination);
+    libzerocoin::PrivateCoin privateCoin(paramsCoin, denomination, false);
     privateCoin.setPublicCoin(pubCoinSelected);
     privateCoin.setRandomness(zerocoinSelected.GetRandomness());
     privateCoin.setSerialNumber(zerocoinSelected.GetSerialNumber());
@@ -4745,8 +4758,18 @@ bool CWallet::CreateZerocoinSpendTransaction(CAmount nValue, int nSecurityLevel,
             vSelectedMints.emplace_back(mint);
         }
     } else {
-        for (const CZerocoinMint mint : vSelectedMints)
+        unsigned int mintsCount = 0;
+        for (const CZerocoinMint& mint : vSelectedMints) {
+            if (nValueSelected < nValue) {
             nValueSelected += ZerocoinDenominationToAmount(mint.GetDenomination());
+                mintsCount ++;
+            }
+            else
+                break;
+        }
+        if (mintsCount < vSelectedMints.size()) {
+            vSelectedMints.resize(mintsCount);
+        }
     }
 
     int nArchived = 0;

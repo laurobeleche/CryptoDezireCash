@@ -44,6 +44,8 @@ bool TransactionFilterProxy::filterAcceptsRow(int sourceRow, const QModelIndex& 
 
     if (!showInactive && status == TransactionStatus::Conflicted)
         return false;
+    if (fHideOrphans && isOrphan(status, type))
+        return false;
     if (!(TYPE(type) & typeFilter))
         return false;
     if (involvesWatchAddress && watchOnlyFilter == WatchOnlyFilter_No)
@@ -102,6 +104,12 @@ void TransactionFilterProxy::setShowInactive(bool showInactive)
     invalidateFilter();
 }
 
+void TransactionFilterProxy::setHideOrphans(bool fHide)
+{
+    this->fHideOrphans = fHide;
+    invalidateFilter();
+}
+
 int TransactionFilterProxy::rowCount(const QModelIndex& parent) const
 {
     if (limitRows != -1) {
@@ -109,4 +117,11 @@ int TransactionFilterProxy::rowCount(const QModelIndex& parent) const
     } else {
         return QSortFilterProxyModel::rowCount(parent);
     }
+}
+
+bool TransactionFilterProxy::isOrphan(const int status, const int type)
+{
+    return ( (type == TransactionRecord::Generated || type == TransactionRecord::StakeMint ||
+            type == TransactionRecord::StakeZCDZC || type == TransactionRecord::MNReward)
+            && (status == TransactionStatus::Conflicted || status == TransactionStatus::NotAccepted) );
 }

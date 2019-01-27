@@ -17,4 +17,4 @@ namespace libzerocoin {
     };
 }
 
-#endif //CRYPTODEZIRECASH_SPENDTYPE_H
+#endif //PIVX_SPENDTYPE_H

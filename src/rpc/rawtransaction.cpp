@@ -320,9 +320,8 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
 {
   if (fHelp || params.size() != 2)
         throw runtime_error(
-            "createrawtransaction [{\"txid\":\"id\",\"vout\":n},...] {\"address\":amount,\"data\":\"hex\",...}\n"
-            "\nCreate a transaction spending the given inputs and creating new outputs.\n"
-            "Outputs can be addresses or data.\n"
+            "createrawtransaction [{\"txid\":\"id\",\"vout\":n},...] {\"address\":amount,...}\n"
+            "\nCreate a transaction spending the given inputs and sending to the given addresses.\n"
             "Returns hex-encoded raw transaction.\n"
             "Note that the transaction's inputs are not signed, and\n"
             "it is not stored in the wallet or transmitted to the network.\n"
@@ -336,22 +335,17 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
             "       }\n"
             "       ,...\n"
             "     ]\n"
-            "2. \"outputs\"             (string, required) a json object with outputs\n"
+            "2. \"addresses\"           (string, required) a json object with addresses as keys and amounts as values\n"
             "    {\n"
-            "      \"address\": x.xxx   (numeric, required) The key is the Crypto Dezire Cash address, the value is the amount\n"
-            "      \"data\": \"hex\",     (string, required) The key is \"data\", the value is hex encoded data\n"
-            "      ...\n"
+            "      \"address\": x.xxx   (numeric, required) The key is the cdzc address, the value is the btc amount\n"
+            "      ,...\n"
             "    }\n"
 
             "\nResult:\n"
             "\"transaction\"            (string) hex string of the transaction\n"
 
-            "\nExamples\n"
-            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"{\\\"address\\\":0.01}\"")
-            + HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"{\\\"data\\\":\\\"00010203\\\"}\"")
-            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\", \"{\\\"address\\\":0.01}\"")
-            + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\", \"{\\\"data\\\":\\\"00010203\\\"}\"")
-        );
+            "\nExamples\n" +
+            HelpExampleCli("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\" \"{\\\"address\\\":0.01}\"") + HelpExampleRpc("createrawtransaction", "\"[{\\\"txid\\\":\\\"myid\\\",\\\"vout\\\":0}]\", \"{\\\"address\\\":0.01}\""));
 
     LOCK(cs_main);
     RPCTypeCheck(params, boost::assign::list_of(UniValue::VARR)(UniValue::VOBJ));
@@ -381,15 +375,10 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
     set<CBitcoinAddress> setAddress;
     vector<string> addrList = sendTo.getKeys();
     BOOST_FOREACH(const string& name_, addrList) {
-        if (name_ == "data") {
-            std::vector<unsigned char> data = ParseHexV(sendTo[name_].getValStr(),"Data");
 
-            CTxOut out(0, CScript() << OP_RETURN << data);
-            rawTx.vout.push_back(out);
-        } else {
             CBitcoinAddress address(name_);
             if (!address.IsValid())
-                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid Bitcoin address: ")+name_);
+                throw JSONRPCError(RPC_INVALID_ADDRESS_OR_KEY, string("Invalid CDZC address: ")+name_);
 
             if (setAddress.count(address))
                 throw JSONRPCError(RPC_INVALID_PARAMETER, string("Invalid parameter, duplicated address: ")+name_);
@@ -401,7 +390,6 @@ UniValue createrawtransaction(const UniValue& params, bool fHelp)
             CTxOut out(nAmount, scriptPubKey);
             rawTx.vout.push_back(out);
         }
-    }
 
     return EncodeHexTx(rawTx);
 }

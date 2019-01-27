@@ -1,6 +1,6 @@
 PACKAGE=qt
 $(package)_version=5.7.1
-$(package)_download_path=https://download.qt.io/archive/qt/5.7/$($(package)_version)/submodules
+$(package)_download_path=http://download.qt.io/official_releases/qt/5.7/$($(package)_version)/submodules
 $(package)_suffix=opensource-src-$($(package)_version).tar.gz
 $(package)_file_name=qtbase-$($(package)_suffix)
 $(package)_sha256_hash=95f83e532d23b3ddbde7973f380ecae1bac13230340557276f75f2e37984e410
@@ -91,7 +91,7 @@ $(package)_config_opts_darwin += -device-option MAC_TARGET=$(host)
 $(package)_config_opts_darwin += -device-option MAC_LD64_VERSION=$(LD64_VERSION)
 endif
 
-$(package)_config_opts_linux  = -qt-xkbcommon
+$(package)_config_opts_linux  = -qt-xkbcommon-x11
 $(package)_config_opts_linux += -qt-xcb
 $(package)_config_opts_linux += -system-freetype
 $(package)_config_opts_linux += -no-sm

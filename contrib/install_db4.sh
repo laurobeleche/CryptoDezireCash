@@ -2,6 +2,7 @@
 
 # Install libdb4.8 (Berkeley DB).
 
+export LC_ALL=C
 set -e
 
 if [ -z "${1}" ]; then
@@ -80,7 +81,7 @@ make install
 echo
 echo "db4 build complete."
 echo
-echo 'When compiling bitcoind, run `./configure` in the following way:'
+echo 'When compiling iond, run `./configure` in the following way:'
 echo
 echo "  export BDB_PREFIX='${BDB_PREFIX}'"
 echo '  ./configure BDB_LIBS="-L${BDB_PREFIX}/lib -ldb_cxx-4.8" BDB_CFLAGS="-I${BDB_PREFIX}/include" ...'

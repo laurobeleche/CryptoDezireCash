@@ -280,7 +280,7 @@ bool CalculateAccumulatorCheckpoint(int nHeight, uint256& nCheckpoint, Accumulat
         LogPrint("zero", "%s found %d mints\n", __func__, listPubcoins.size());
 
         //add the pubcoins to accumulator
-        for (const PublicCoin pubcoin : listPubcoins) {
+        for (const PublicCoin& pubcoin : listPubcoins) {
             if(!mapAccumulators.Accumulate(pubcoin, true))
                 return error("%s: failed to add pubcoin to accumulator at height %d", __func__, pindex->nHeight);
         }
@@ -400,7 +400,7 @@ bool GetAccumulatorValue(int& nHeight, const libzerocoin::CoinDenomination denom
 
     int nHeightCheckpoint = 0;
     AccumulatorCheckpoints::Checkpoint checkpoint = AccumulatorCheckpoints::GetClosestCheckpoint(nHeight, nHeightCheckpoint);
-    if (nHeightCheckpoint <= 0) {
+    if (nHeightCheckpoint < 0) {
         //Start at the first zerocoin
         libzerocoin::Accumulator accumulator(Params().Zerocoin_Params(false), denom);
         bnAccValue = accumulator.getValue();

@@ -3929,7 +3929,7 @@ bool CheckBlock(const CBlock& block, CValidationState& state, bool fCheckPOW, bo
 
                 if (tx.vout[nIndex].nValue != nMasternodeValue) {
                     return state.DoS(100, error("%s : rejected by check masternode lock-in at %d", __func__, nHeight),
-                        REJECT_INVALID, "check devfund mismatch");
+                        REJECT_INVALID, "check masternode mismatch");
                 }
 
                 if (nDevFundValue > 0)

@@ -60,17 +60,6 @@ public:
         qint64 amount = index.data(TransactionTableModel::AmountRole).toLongLong();
         bool confirmed = index.data(TransactionTableModel::ConfirmedRole).toBool();
 
-        // Check transaction status
-        int nStatus = index.data(TransactionTableModel::StatusRole).toInt();
-        bool fConflicted = false;
-        if (nStatus == TransactionStatus::Conflicted || nStatus == TransactionStatus::NotAccepted) {
-            fConflicted = true; // Most probably orphaned, but could have other reasons as well
-        }
-        bool fImmature = false;
-        if (nStatus == TransactionStatus::Immature) {
-            fImmature = true;
-        }
-
         QVariant value = index.data(Qt::ForegroundRole);
         QColor foreground = COLOR_BLACK;
         if (value.canConvert<QBrush>()) {
@@ -88,15 +77,9 @@ public:
             iconWatchonly.paint(painter, watchonlyRect);
         }
 
-        if(fConflicted) { // No need to check anything else for conflicted transactions
-            foreground = COLOR_CONFLICTED;
-        } else if (!confirmed || fImmature) {
-            foreground = COLOR_UNCONFIRMED;
-        } else if (amount < 0) {
+        if (amount < 0)
             foreground = COLOR_NEGATIVE;
-        } else {
-            foreground = COLOR_WHITE;
-        }
+
         painter->setPen(foreground);
         QString amountText = BitcoinUnits::formatWithUnit(unit, amount, true, BitcoinUnits::separatorAlways);
         if (!confirmed) {
@@ -212,9 +195,11 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     // CDZC Balance
     CAmount nTotalBalance = balance + unconfirmedBalance;
     CAmount cdzcAvailableBalance = balance - immatureBalance - nLockedBalance;
-    CAmount nTotalWatchBalance = watchOnlyBalance + watchUnconfBalance + watchImmatureBalance;    
-    CAmount nUnlockedBalance = nTotalBalance - nLockedBalance; // increment nLockedBalance twice because it was added to
-                                                                                // nTotalBalance above
+    CAmount nUnlockedBalance = nTotalBalance - nLockedBalance;
+    
+    // CDZC Watch-Only Balance
+    CAmount nTotalWatchBalance = watchOnlyBalance + watchUnconfBalance;
+    CAmount nAvailableWatchBalance = watchOnlyBalance - watchImmatureBalance - nWatchOnlyLockedBalance;
     // zCDZC Balance
     CAmount matureZerocoinBalance = zerocoinBalance - unconfirmedZerocoinBalance - immatureZerocoinBalance;
     // Percentages
@@ -233,7 +218,7 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     ui->labelTotal->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, nTotalBalance, false, BitcoinUnits::separatorAlways));
 
     // Watchonly labels
-    ui->labelWatchAvailable->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, watchOnlyBalance, false, BitcoinUnits::separatorAlways));
+    ui->labelWatchAvailable->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, nAvailableWatchBalance, false, BitcoinUnits::separatorAlways));
     ui->labelWatchPending->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, watchUnconfBalance, false, BitcoinUnits::separatorAlways));
     ui->labelWatchImmature->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, watchImmatureBalance, false, BitcoinUnits::separatorAlways));
     ui->labelWatchLocked->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, nWatchOnlyLockedBalance, false, BitcoinUnits::separatorAlways));
@@ -271,27 +256,37 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     bool showSumAvailable = settingShowAllBalances || sumTotalBalance != availableTotalBalance;
     ui->labelBalanceTextz->setVisible(showSumAvailable);
     ui->labelBalancez->setVisible(showSumAvailable);
-    bool showCDZCAvailable = settingShowAllBalances || cdzcAvailableBalance != nTotalBalance;
-    bool showWatchOnlyCDZCAvailable = watchOnlyBalance != nTotalWatchBalance;
-    bool showCDZCPending = settingShowAllBalances || unconfirmedBalance != 0;
-    bool showWatchOnlyCDZCPending = watchUnconfBalance != 0;
-    bool showCDZCLocked = settingShowAllBalances || nLockedBalance != 0;
-    bool showWatchOnlyCDZCLocked = nWatchOnlyLockedBalance != 0;
-    bool showImmature = settingShowAllBalances || immatureBalance != 0;
-    bool showWatchOnlyImmature = watchImmatureBalance != 0;
     bool showWatchOnly = nTotalWatchBalance != 0;
-    ui->labelBalance->setVisible(showCDZCAvailable || showWatchOnlyCDZCAvailable);
+
+    // CDZC Available
+    bool showCDZCAvailable = settingShowAllBalances || cdzcAvailableBalance != nTotalBalance;
+    bool showWatchOnlyCDZCAvailable = showCDZCAvailable || nAvailableWatchBalance != nTotalWatchBalance;
     ui->labelBalanceText->setVisible(showCDZCAvailable || showWatchOnlyCDZCAvailable);
-    ui->labelWatchAvailable->setVisible(showCDZCAvailable && showWatchOnly);
-    ui->labelUnconfirmed->setVisible(showCDZCPending || showWatchOnlyCDZCPending);
+    ui->labelBalance->setVisible(showCDZCAvailable || showWatchOnlyCDZCAvailable);
+    ui->labelWatchAvailable->setVisible(showWatchOnlyCDZCAvailable && showWatchOnly);
+
+    // CDZC Pending
+    bool showCDZCPending = settingShowAllBalances || unconfirmedBalance != 0;
+    bool showWatchOnlyCDZCPending = showCDZCPending || watchUnconfBalance != 0;
     ui->labelPendingText->setVisible(showCDZCPending || showWatchOnlyCDZCPending);
-    ui->labelWatchPending->setVisible(showCDZCPending && showWatchOnly);
-    ui->labelLockedBalance->setVisible(showCDZCLocked || showWatchOnlyCDZCLocked);
+    ui->labelUnconfirmed->setVisible(showCDZCPending || showWatchOnlyCDZCPending);
+    ui->labelWatchPending->setVisible(showWatchOnlyCDZCPending && showWatchOnly);
+
+    // CDZC Immature
+    bool showCDZCImmature = settingShowAllBalances || immatureBalance != 0;
+    bool showWatchOnlyImmature = showCDZCImmature || watchImmatureBalance != 0;
+    ui->labelImmatureText->setVisible(showCDZCImmature || showWatchOnlyImmature);
+    ui->labelImmature->setVisible(showCDZCImmature || showWatchOnlyImmature); // for symmetry reasons also show immature label when the watch-only one is shown
+    ui->labelWatchImmature->setVisible(showWatchOnlyImmature && showWatchOnly); // show watch-only immature balance
+
+    // CDZC Locked
+    bool showCDZCLocked = settingShowAllBalances || nLockedBalance != 0;
+    bool showWatchOnlyCDZCLocked = showCDZCLocked || nWatchOnlyLockedBalance != 0;
     ui->labelLockedBalanceText->setVisible(showCDZCLocked || showWatchOnlyCDZCLocked);
-    ui->labelWatchLocked->setVisible(showCDZCLocked && showWatchOnly);
-    ui->labelImmature->setVisible(showImmature || showWatchOnlyImmature); // for symmetry reasons also show immature label when the watch-only one is shown
-    ui->labelImmatureText->setVisible(showImmature || showWatchOnlyImmature);
-    ui->labelWatchImmature->setVisible(showImmature && showWatchOnly); // show watch-only immature balance
+    ui->labelLockedBalance->setVisible(showCDZCLocked || showWatchOnlyCDZCLocked);
+    ui->labelWatchLocked->setVisible(showWatchOnlyCDZCLocked && showWatchOnly);
+   
+    // zCDZC
     bool showzCDZCAvailable = settingShowAllBalances || zerocoinBalance != matureZerocoinBalance;
     bool showzCDZCUnconfirmed = settingShowAllBalances || unconfirmedZerocoinBalance != 0;
     bool showzCDZCImmature = settingShowAllBalances || immatureZerocoinBalance != 0;
@@ -301,6 +296,8 @@ void OverviewPage::setBalance(const CAmount& balance, const CAmount& unconfirmed
     ui->labelzBalanceUnconfirmedText->setVisible(showzCDZCUnconfirmed);
     ui->labelzBalanceImmature->setVisible(showzCDZCImmature);
     ui->labelzBalanceImmatureText->setVisible(showzCDZCImmature);
+    
+    // Percent split
     bool showPercentages = ! (zerocoinBalance == 0 && nTotalBalance == 0);
     ui->labelCDZCPercent->setVisible(showPercentages);
     ui->labelzCDZCPercent->setVisible(showPercentages);
@@ -369,6 +366,7 @@ void OverviewPage::setWalletModel(WalletModel* model)
 
         connect(model->getOptionsModel(), SIGNAL(displayUnitChanged(int)), this, SLOT(updateDisplayUnit()));
         connect(model->getOptionsModel(), SIGNAL(hideZeroBalancesChanged(bool)), this, SLOT(updateDisplayUnit()));
+        connect(model->getOptionsModel(), SIGNAL(hideOrphansChanged(bool)), this, SLOT(hideOrphans(bool)));
 
         updateWatchOnlyLabels(model->haveWatchOnly());
         connect(model, SIGNAL(notifyWatchonlyChanged(bool)), this, SLOT(updateWatchOnlyLabels(bool)));
@@ -376,6 +374,10 @@ void OverviewPage::setWalletModel(WalletModel* model)
 
     // update the display unit, to not use the default ("CDZC")
     updateDisplayUnit();
+
+    // Hide orphans
+    QSettings settings;
+    hideOrphans(settings.value("fHideOrphans", false).toBool());
 }
 
 void OverviewPage::updateDisplayUnit()
@@ -403,4 +405,10 @@ void OverviewPage::showOutOfSyncWarning(bool fShow)
 {
     ui->labelWalletStatus->setVisible(fShow);
     ui->labelTransactionsStatus->setVisible(fShow);
+}
+
+void OverviewPage::hideOrphans(bool fHide)
+{
+    if (filter)
+        filter->setHideOrphans(fHide);
 }

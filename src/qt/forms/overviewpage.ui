@@ -229,7 +229,7 @@
                     </property>
                     <layout class="QVBoxLayout" name="verticalLayout_5">
                      <item>
-                      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0">
+                      <layout class="QHBoxLayout" name="horizontalLayout_5" stretch="0,0,0">
                        <item>
                         <widget class="QLabel" name="label_5z">
                          <property name="minimumSize">

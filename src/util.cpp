@@ -106,7 +106,7 @@ std::string to_internal(const std::string&);
 
 using namespace std;
 
-// Crypto Dezire Cash only features
+// PIVX only features
 // Masternode
 bool fMasterNode = false;
 string strMasterNodePrivKey = "";
@@ -512,7 +512,7 @@ void ReadConfigFile(map<string, string>& mapSettingsRet,
 {
     boost::filesystem::ifstream streamConfig(GetConfigFile());
     if (!streamConfig.good()) {
-        // Create empty huzu.conf if it does not exist
+        // Create empty  if it does not exist
         FILE* configFile = fopen(GetConfigFile().string().c_str(), "a");
         if (configFile != NULL) {
             unsigned char rand_pwd[32];

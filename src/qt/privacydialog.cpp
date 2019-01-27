@@ -29,13 +29,14 @@
 PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowTitleHint | Qt::WindowCloseButtonHint | Qt::WindowCloseButtonHint),
                                                           ui(new Ui::PrivacyDialog),
                                                           walletModel(0),
-                                                          currentBalance(-1)
+                                                          currentBalance(-1),
+                                                          fDenomsMinimized(true)
 {
     nDisplayUnit = 0; // just make sure it's not unitialized
     ui->setupUi(this);
 
     // "Spending 999999 zCDZC ought to be enough for anybody." - Bill Gates, 2017
-    ui->zCDZCpayAmount->setValidator( new QDoubleValidator(0.0, 398360470.0, 20, this) );
+    ui->zCDZCpayAmount->setValidator( new QDoubleValidator(0.0, 21000000.0, 20, this) );
     ui->labelMintAmountValue->setValidator( new QIntValidator(0, 999999, this) );
 
     // Default texts for (mini-) coincontrol
@@ -111,10 +112,16 @@ PrivacyDialog::PrivacyDialog(QWidget* parent) : QDialog(parent, Qt::WindowSystem
 
     // Set labels/buttons depending on SPORK_16 status
     updateSPORK16Status();
+    // init Denoms section
+    if(!settings.contains("fDenomsSectionMinimized"))
+        settings.setValue("fDenomsSectionMinimized", true);
+    minimizeDenomsSection(settings.value("fDenomsSectionMinimized").toBool());
 }
 
 PrivacyDialog::~PrivacyDialog()
 {
+    QSettings settings;
+    settings.setValue("fDenomsSectionMinimized", fDenomsMinimized);
     delete ui;
 }
 
@@ -581,6 +588,27 @@ void PrivacyDialog::coinControlUpdateLabels()
     }
 }
 
+void PrivacyDialog::on_pushButtonShowDenoms_clicked()
+{
+    minimizeDenomsSection(false);
+}
+
+void PrivacyDialog::on_pushButtonHideDenoms_clicked()
+{
+    minimizeDenomsSection(true);
+}
+
+void PrivacyDialog::minimizeDenomsSection(bool fMinimize)
+{
+    if (fMinimize) {
+        ui->balanceSupplyFrame->show();
+        ui->verticalFrameRight->hide();
+    } else {
+        ui->balanceSupplyFrame->hide();
+        ui->verticalFrameRight->show();
+    }
+    fDenomsMinimized = fMinimize;
+}
 bool PrivacyDialog::updateLabel(const QString& address)
 {
     if (!walletModel)
@@ -702,6 +730,7 @@ void PrivacyDialog::setBalance(const CAmount& balance, const CAmount& unconfirme
 
     ui->labelzAvailableAmount->setText(QString::number(zerocoinBalance/COIN) + QString(" zCDZC "));
     ui->labelzAvailableAmount_2->setText(QString::number(matureZerocoinBalance/COIN) + QString(" zCDZC "));
+    ui->labelzAvailableAmount_4->setText(QString::number(zerocoinBalance/COIN) + QString(" zCDZC "));
     ui->labelzCDZCAmountValue->setText(BitcoinUnits::floorHtmlWithUnit(nDisplayUnit, balance - immatureBalance - nLockedBalance, false, BitcoinUnits::separatorAlways));
 
     // Display AutoMint status
@@ -712,6 +741,7 @@ void PrivacyDialog::setBalance(const CAmount& balance, const CAmount& unconfirme
 
     // Display global supply
     ui->labelZsupplyAmount->setText(QString::number(chainActive.Tip()->GetZerocoinSupply()/COIN) + QString(" <b>zCDZC </b> "));
+    ui->labelZsupplyAmount_2->setText(QString::number(chainActive.Tip()->GetZerocoinSupply()/COIN) + QString(" <b>zCDZC </b> "));
     for (auto denom : libzerocoin::zerocoinDenomList) {
         int64_t nSupply = chainActive.Tip()->mapZerocoinSupply.at(denom);
         QString strSupply = QString::number(nSupply) + " x " + QString::number(denom) + " = <b>" +

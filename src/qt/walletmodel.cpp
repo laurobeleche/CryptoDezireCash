@@ -156,6 +156,8 @@ void WalletModel::pollBalanceChanged()
         if (transactionTableModel) {
             transactionTableModel->updateConfirmations();
         }
+        // Address in receive tab may have been used
+        emit notifyReceiveAddressChanged();
     }
 }
 
@@ -758,10 +760,10 @@ void WalletModel::listLockedCoins(std::vector<COutPoint>& vOutpts)
 }
 
 
-void WalletModel::listZerocoinMints(std::set<CMintMeta>& setMints, bool fUnusedOnly, bool fMaturedOnly, bool fUpdateStatus)
+void WalletModel::listZerocoinMints(std::set<CMintMeta>& setMints, bool fUnusedOnly, bool fMaturedOnly, bool fUpdateStatus, bool fWrongSeed)
 {
     setMints.clear();
-    setMints = pwalletMain->zcdzcTracker->ListMints(fUnusedOnly, fMaturedOnly, fUpdateStatus);
+    setMints = pwalletMain->zcdzcTracker->ListMints(fUnusedOnly, fMaturedOnly, fUpdateStatus, fWrongSeed);
 }
 
 void WalletModel::loadReceiveRequests(std::vector<std::string>& vReceiveRequests)
@@ -791,4 +793,9 @@ bool WalletModel::saveReceiveRequest(const std::string& sAddress, const int64_t 
 bool WalletModel::isMine(CBitcoinAddress address)
 {
     return IsMine(*wallet, address.Get());
+}
+
+bool WalletModel::isUsed(CBitcoinAddress address)
+{
+    return wallet->IsUsed(address);
 }

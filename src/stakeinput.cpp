@@ -135,7 +135,7 @@ bool CZCdzcStake::CreateTxOuts(CWallet* pwallet, vector<CTxOut>& vout, CAmount n
     if (!pwallet->DatabaseMint(dMint))
         return error("%s: failed to database the staked zCDZC", __func__);
 
-    for (unsigned int i = 0; i < 1; i++) {
+    for (unsigned int i = 0; i < 3; i++) {
         CTxOut out;
         CDeterministicMint dMintReward;
         if (!pwallet->CreateZCDZCOutPut(libzerocoin::CoinDenomination::ZQ_ONE, out, dMintReward))

@@ -8,8 +8,6 @@
 
 #include "tinyformat.h"
 
-#include <string>
-
 /**
  * Name of client reported in the 'version' message. Report the same name
  * for both cryptodezirecashd and cryptodezirecash-qt, to make it harder for attackers to
@@ -20,7 +18,7 @@ const std::string CLIENT_NAME("Crypto Dezire Cash Core");
 /**
  * Client version number
  */
-#define CLIENT_VERSION_SUFFIX "-Dezire"
+#define CLIENT_VERSION_SUFFIX "-Moon"
 
 
 /**
@@ -41,7 +39,7 @@ const std::string CLIENT_NAME("Crypto Dezire Cash Core");
 
 //! First, include build.h if requested
 #ifdef HAVE_BUILD_INFO
-#include "build.h"
+#include "obj/build.h"
 #endif
 
 //! git will put "#define GIT_ARCHIVE 1" on the next line inside archives. $Format:%n#define GIT_ARCHIVE 1$

@@ -134,13 +134,13 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
     // ppcoin: if coinstake available add coinstake tx
     static int64_t nLastCoinStakeSearchTime = GetAdjustedTime(); // only initialized at startup
 
-    CMutableTransaction txCoinStake;
     
     if (fProofOfStake) {
         boost::this_thread::interruption_point();
         pblock->nTime = GetAdjustedTime();
         CBlockIndex* pindexPrev = chainActive.Tip();
         pblock->nBits = GetNextWorkRequired(pindexPrev, pblock);
+        CMutableTransaction txCoinStake;
         int64_t nSearchTime = pblock->nTime; // search to current time
         bool fStakeFound = false;
         if (nSearchTime >= nLastCoinStakeSearchTime) {
@@ -183,7 +183,6 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
 
         CBlockIndex* pindexPrev = chainActive.Tip();
         const int nHeight = pindexPrev->nHeight + 1;
-        txNew.vin[0].scriptSig = CScript() << nHeight << OP_0;
         CCoinsViewCache view(pcoinsTip);
 
         // Priority order to process transactions
@@ -358,7 +357,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
                     continue;
 
                 bool fDoubleSerial = false;
-                for (const CTxIn txIn : tx.vin) {
+                for (const CTxIn& txIn : tx.vin) {
                     if (txIn.scriptSig.IsZerocoinSpend()) {
                         libzerocoin::CoinSpend spend = TxInToZerocoinSpend(txIn);
                         bool fUseV1Params = libzerocoin::ExtractVersionFromSerial(spend.getCoinSerialNumber()) < libzerocoin::PrivateCoin::PUBKEY_VERSION;
@@ -403,7 +402,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
             nBlockSigOps += nTxSigOps;
             nFees += nTxFees;
 
-            for (const CBigNum bnSerial : vTxSerials)
+            for (const CBigNum& bnSerial : vTxSerials)
                 vBlockSerials.emplace_back(bnSerial);
 
             if (fPrintPriority) {
@@ -454,7 +453,7 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
         pblock->nNonce = 0;
 
         //Calculate the accumulator checkpoint only if the previous cached checkpoint need to be updated
-        if (nHeight > 10) {
+ 
             uint256 nCheckpoint;
             uint256 hashBlockLastAccumulated = chainActive[nHeight - (nHeight % 10) - 10]->GetBlockHash();
             if (nHeight >= pCheckpointCache.first || pCheckpointCache.second.first != hashBlockLastAccumulated) {
@@ -476,7 +475,6 @@ CBlockTemplate* CreateNewBlock(const CScript& scriptPubKeyIn, CWallet* pwallet, 
             }
 
             pblock->nAccumulatorCheckpoint = pCheckpointCache.second.second;
-        }
         pblocktemplate->vTxSigOps[0] = GetLegacySigOpCount(pblock->vtx[0]);
 
         CValidationState state;
@@ -587,23 +585,6 @@ void BitcoinMiner(CWallet* pwallet, bool fProofOfStake)
     unsigned int nExtraNonce = 0;
 
     while (fGenerateBitcoins || fProofOfStake) {
-        if (chainActive.Tip()->nHeight >= Params().LAST_POW_BLOCK() && !fProofOfStake) {
-            MilliSleep(5000);
-            break;
-        }
-        do {
-            bool fvNodesEmpty;
-            {
-                LOCK(cs_vNodes);
-                fvNodesEmpty = vNodes.empty();
-            }
-            //LogPrintf("BitcoinMiner:: fvNodesEmpty: %d, IsInitialBlockDownload(): %d......................\n", fvNodesEmpty, IsInitialBlockDownload());
-            if ((!fvNodesEmpty && !IsInitialBlockDownload()) || !Params().MiningRequiresPeers())
-                break;
-            MilliSleep(1000);
-            boost::this_thread::interruption_point();
-        } while (true);
-
         if (fProofOfStake) {
             //control the amount of times the client will check for mintable coins
             if ((GetTime() - nMintableLastCheck > 5 * 60)) // 5 minute check time
