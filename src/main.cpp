@@ -987,7 +987,7 @@ bool ContextualCheckZerocoinSpend(const CTransaction& tx, const CoinSpend& spend
      //Reject serial's that are already in the blockchain
     int nHeightTx = 0;
     if (IsSerialInBlockchain(spend.getCoinSerialNumber(), nHeightTx))
-        return error("%s : zCD spend with serial %s is already in block %d\n", __func__,
+        return error("%s : zCDZC spend with serial %s is already in block %d\n", __func__,
                      spend.getCoinSerialNumber().GetHex(), nHeightTx);
 
      return true;
@@ -1004,7 +1004,7 @@ bool ContextualCheckZerocoinSpend(const CTransaction& tx, const CoinSpend& spend
         if (tx.IsCoinStake())
             expectedType = libzerocoin::SpendType::STAKE;
         if (spend.getSpendType() != expectedType) {
-            return error("%s: trying to spend zGROW without the correct spend type. txid=%s", __func__,
+            return error("%s: trying to spend zCDZC without the correct spend type. txid=%s", __func__,
                          tx.GetHash().GetHex());
         }
     }
@@ -4359,18 +4359,26 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                     cdzcInputs.push_back(stakeIn);
                 }
             }
-            const bool hasIONInputs = !cdzcInputs.empty();
-            const bool hasXIONInputs = !zCDZCInputs.empty();
+            const bool hasCDZCInputs = !cdzcInputs.empty();
+            const bool hasZCDZCInputs = !zCDZCInputs.empty();
 
+            int readBlock = 0;
             vector<CBigNum> vBlockSerials;
                 CBlock bl;
             // Go backwards on the forked chain up to the split
             do {
+                // Check if the forked chain is longer than the max reorg limit
+                if(readBlock == Params().MaxReorganizationDepth()){
+                    // TODO: Remove this chain from disk.
+                    return error("%s: forked chain longer than maximum reorg limit", __func__);
+                }
                 if(!ReadBlockFromDisk(bl, prev))
                     // Previous block not on disk
                     return error("%s: previous block %s not on disk", __func__, prev->GetBlockHash().GetHex());
 
 
+                // Increase amount of read blocks
+                readBlock++;
                 // Loop through every input from said block
                 for (CTransaction t : bl.vtx) {
                     for (CTxIn in: t.vin) {
@@ -4379,14 +4387,14 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
                             // if it's already spent
 
                             // First regular staking check
-                            if(hasIONInputs) {
+                            if(hasCDZCInputs) {
                             if (stakeIn.prevout == in.prevout) {
                                     return state.DoS(100, error("%s: input already spent on a previous block", __func__));
                                 }
                             }
 
                             // Second, if there is zPoS staking then store the serials for later check
-                            if(hasXIONInputs) {
+                            if(hasZCDZCInputs) {
                                 if(in.scriptSig.IsZerocoinSpend()){
                                     vBlockSerials.push_back(TxInToZerocoinSpend(in).getCoinSerialNumber());
                                 }
@@ -4402,11 +4410,11 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
             // Split height
             splitHeight = prev->nHeight;
 
-            // Now that this loop if completed. Check if we have xION inputs.
-            if(hasXIONInputs){
+            // Now that this loop if completed. Check if we have zCDZC inputs.
+            if(hasZCDZCInputs){
 
-                for (CTxIn xIonInput : zCDZCInputs) {
-                    CoinSpend spend = TxInToZerocoinSpend(xIonInput);
+                for (CTxIn zCdzcInput : zCDZCInputs) {
+                    CoinSpend spend = TxInToZerocoinSpend(zCdzcInput);
 
                     // First check if the serials were not already spent on the forked blocks.
                     CBigNum coinSerial = spend.getCoinSerialNumber();
@@ -4430,7 +4438,7 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
 
                     if (!ContextualCheckZerocoinSpendNoSerialCheck(stakeTxIn, spend, pindex, 0))
                         return state.DoS(100,error("%s: ContextualCheckZerocoinSpend failed for tx %s", __func__,
-                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-xion");
+                                                   stakeTxIn.GetHash().GetHex()), REJECT_INVALID, "bad-txns-invalid-zcdzc");
 
                     // Now only the ZKP left..
                     // As the spend maturity is 200, the acc value must be accumulated, otherwise it's not ready to be spent
@@ -4457,6 +4465,12 @@ bool AcceptBlock(CBlock& block, CValidationState& state, CBlockIndex** ppindex, 
         if(!stakeTxIn.IsZerocoinSpend()) {
             for (CTxIn in: stakeTxIn.vin) {
                 const CCoins* coin = coins.AccessCoins(in.prevout.hash);
+                
+                if(!coin && !isBlockFromFork){
+                    // No coins on the main chain
+                    return error("%s: coin stake inputs not available on main chain", __func__);
+                }
+
                 if(coin && !coin->IsAvailable(in.prevout.n)){
                     // If this is not available get the height of the spent and validate it with the forked height
                     // Check if this occurred before the chain split
@@ -4594,7 +4608,7 @@ bool ProcessNewBlock(CValidationState& state, CNode* pfrom, CBlock* pblock, CDis
         }
 
         // Store to disk
-        CBlockIndex* pindex = NULL;
+        CBlockIndex* pindex = nullptr;
         bool ret = AcceptBlock (*pblock, state, &pindex, dbp, checked);
         if (pindex && pfrom) {
             mapBlockSource[pindex->GetBlockHash ()] = pfrom->GetId ();
@@ -4602,7 +4616,7 @@ bool ProcessNewBlock(CValidationState& state, CNode* pfrom, CBlock* pblock, CDis
         CheckBlockIndex ();
         if (!ret) {
             // Check spamming
-            if(GetBoolArg("-blockspamfilter", DEFAULT_BLOCK_SPAM_FILTER)) {
+            if(pfrom && GetBoolArg("-blockspamfilter", DEFAULT_BLOCK_SPAM_FILTER)) {
                 CNodeState *nodestate = State(pfrom->GetId());
                 nodestate->nodeBlocks.onBlockReceived(pindex->nHeight);
                 bool nodeStatus = true;
