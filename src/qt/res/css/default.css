@@ -34,7 +34,7 @@ QMenu {
 }
 
 QMenu::item {
-    background-color: #caba5a;
+    background-color: #252525;
     color: rgba(255, 255, 255, 0.75);
 }
 
