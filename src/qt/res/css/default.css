@@ -7,7 +7,7 @@ WalletFrame {
 
 QStatusBar {
     background-color: #252525;
-    color: #ddc954;
+    color: #caba5a;
 }
 
 .QFrame {
@@ -21,7 +21,7 @@ QMenuBar {
 
 QMenuBar::item {
     background-color:transparent;
-    color: #ddc954;
+    color: #caba5a;
 }
 
 QMenuBar::item:selected {
@@ -69,7 +69,7 @@ QToolBar > QToolButton {
 QToolBar > QToolButton:checked {
     background-color: qlineargradient(x1:0, x2: 1, stop: 0 #252525, stop: 0.07 #252525, stop: .95 rgba(221, 201, 84, 70));
     color:#fff;
-    border-left: 5px solid #F0A087;
+    border-left: 5px solid #caba5a;
     padding: 0;
     margin: 0;
 }
@@ -77,7 +77,7 @@ QToolBar > QToolButton:checked {
 QToolBar > QToolButton:hover:!checked {
     background-color: qlineargradient(x1:0, x2: 1, stop: 0 #ffffff, stop: 0.07 #ffffff, stop: .95 rgba(56, 56, 57, 70));
     color: #fff;
-    border-left: 5px solid #1C2632;
+    border-left: 5px solid #caba5a;
     padding: 0;
     margin: 0;
 }
@@ -100,7 +100,7 @@ QProgressBar {
 }
 
 QProgressBar::chunk {
-    background-color: #ddc954;
+    background-color: qlineargradient(x1:0, x2: 1, stop: 0 #252525, stop: 0.07 #252525, stop: .95 rgba(221, 201, 84, 70));
     width: 20px;
     color: #fff;
 }
@@ -131,7 +131,7 @@ QTabBar::tab:hover:!selected {
 }
 
 QWidget {
-    selection-background-color:#252525; /* Object highlight color */
+    selection-background-color:qlineargradient(x1: 0, y1: 0, x2: 0, y2: 1, stop: .1 rgba(202, 186, 90, 100), stop: .95 rgba(202, 186, 90, 120)); /* Object highlight color */
     selection-color:#fff;
     outline:0; /* Remove Annoying Focus Rectangle */
 }
@@ -150,15 +150,15 @@ QToolTip {
 
 QLabel { /* Base Text Size & Color */
     font-size: 12px;
-    color: #333333;
+    color: #ffffff;
 }
 
 .QRadioButton { /* Radio Button Labels */
-    color:#333333;
+    color:#a3a2a2;
 }
 
 .QCheckBox { /* Checkbox Labels */
-    color:#333333;
+    color:#a3a2a2;
 }
 
 .QCheckBox:hover {
