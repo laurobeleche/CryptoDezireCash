@@ -1151,7 +1151,7 @@ QWidget .QFrame#frame_ZerocoinBalances .QLabel#label_5z_3 { /* Zerocoin Balance 
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     min-width:160px;
     background-color:transparent;
-    color:#1C2632;
+    color:#caba5a;
     font-weight:bold;
     font-size:14px;
     margin-right:5px;
@@ -1170,7 +1170,7 @@ QWidget .QFrame#frame_ZerocoinBalances .QLabel#label_5z_3 { /* Zerocoin Balance 
     QWidget .QFrame#frame_ZerocoinBalances .QLabel#labelzBalance { /* Available zCDZC Balance */
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
-    color:#1C2632;
+    color:#caba5a;
     margin-left:0px;
 }
 
@@ -1186,7 +1186,7 @@ QWidget .QFrame#frame_ZerocoinBalances .QLabel#label_5z_3 { /* Zerocoin Balance 
     QWidget .QFrame#frame_ZerocoinBalances .QLabel#labelzBalanceUnconfirmed { /* Unconfirmed zCDZC Balance */
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     font-size:12px;
-    color:#1C2632;
+    color:#caba5a;
     margin-left:0px;
 }
 
