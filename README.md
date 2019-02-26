@@ -11,6 +11,8 @@ Crypto Dezire Cash is a cutting edge cryptocurrency, with many features not avai
 
 More information at [cryptodezire.com](https://cryptodezire.com/) Visit our ANN thread at [BitcoinTalk](#)
 
+
+
 ### Coin Specs
 <table>
 <tr><td>Algo</td><td>Quark</td></tr>
