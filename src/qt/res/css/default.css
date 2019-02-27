@@ -241,7 +241,8 @@ QToolButton#copySignatureButton_SM, QToolButton#addressBookButton_ENC, QToolButt
 QToolButton#copyKeyButton_ENC, QToolButton#selectFileButton, QToolButton#addressBookButton_VM, QToolButton#pasteButton_DEC,
 QToolButton#deleteButton, QToolButton#addressDeleteButton, QToolButton#inputDeleteButton, QToolButton#destinationDeleteButton,
 QToolButton#keyDeleteButton, QToolButton#addressPasteButton {
-    background: #E17061;
+    #background: #E17061;
+	background: #009900;
     border-radius: 5px;
     color:#ffffff;
     font-size:12px;
