@@ -968,6 +968,7 @@ QWidget .QFrame#frame_Space { /* Space between Header and Content */
 
 QWidget .QFrame#frame_Content { /* Actual Content */
     background-color: transparent;
+	color: #fff;
 }
 
 QWidget .QFrame#frame_Balances { /* Upper left side */
