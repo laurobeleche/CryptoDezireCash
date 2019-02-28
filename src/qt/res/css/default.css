@@ -859,7 +859,7 @@ QDialog#RPCConsole QWidget#tab_info QLabel#label_11, QDialog#RPCConsole QWidget#
     min-width:180px;
 	color: #000;
 }
-QDialog#RPCConsole QTabWidget#tabWidget QWidget#tab_info {
+QDialog#RPCConsole QTabWidget#tabWidget QWidget#tab_info QLabel{
 	color: #000;
 }
 
