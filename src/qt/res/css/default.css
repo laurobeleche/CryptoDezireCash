@@ -857,6 +857,7 @@ QDialog#RPCConsole QWidget#tab_info QLabel#label_11, QDialog#RPCConsole QWidget#
     qproperty-alignment: 'AlignBottom';
     min-height:25px;
     min-width:180px;
+	color: #000;
 }
 
 QDialog#RPCConsole QWidget#tab_peers QLabel#peerHeading { /* Peers Info Header */
