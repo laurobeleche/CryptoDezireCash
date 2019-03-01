@@ -1002,6 +1002,10 @@ QWidget .QFrame#frame_Balances > .QLabel {
 	color: #fff;
 }
 
+QWidget#OverviewPage {
+	color: #fff;
+}
+
     QWidget .QFrame#frame_Balances .QLabel#label_5 { /* CDZC Balances Label */
     qproperty-alignment: 'AlignVCenter | AlignLeft';
     min-width:160px;
