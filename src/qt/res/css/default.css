@@ -29,8 +29,8 @@ WalletFrame {
 }
 
 QStatusBar {
-	background-color: #ffffff;
-	border: 0px solid #fff;
+	background-color: #666;
+	border: 0px solid #888;
 	border-style: none;
 }
 
@@ -87,13 +87,13 @@ QToolBar > QToolButton {
 }
 
 QToolBar > QToolButton:checked {
-	background-color: #333c32;
+	background-color: #757575;
 	color:#fff;
 	font-weight:bold;
 }
 
 QToolBar > QToolButton:hover {
-	background-color: #883dc2;
+	background-color: #545454;
 	color: #fff;
 }
 
