@@ -40,11 +40,11 @@ QFrame {
 }
 
 QMenuBar {
-	background-color:#fff;
+	background-color:#aaa;
 }
 
 QMenuBar::item {
-	background-color:#fff;
+	background-color:#aaa;
 	color:#333;
 }
 
