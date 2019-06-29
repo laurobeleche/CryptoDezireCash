@@ -40,29 +40,29 @@ QFrame {
 }
 
 QMenuBar {
-	background-color:#aaa;
+	background-color:#666;
 }
 
 QMenuBar::item {
-	background-color:#aaa;
-	color:#333;
+	background-color:#666;
+	color:#ddd;
 }
 
 QMenuBar::item:selected {
-	background-color:#f8f6f6;
+	background-color:#444;
 }
 
 QMenu {
-	background-color:#f8f6f6;
+	background-color:#555;
 }
 
 QMenu::item {
-	color:#333;
+	color:#ddd;
 }
 
 QMenu::item:selected {
-	background-color:#f2f0f0;
-	color:#333;
+	background-color:#333;
+	color:#ddd;
 }
 
 QToolBar {
