@@ -29,7 +29,7 @@ WalletFrame {
 }
 
 QStatusBar {
-	background-color: #666;
+	background-color: #343434;
 	border: 0px solid #888;
 	border-style: none;
 }
@@ -40,11 +40,11 @@ QFrame {
 }
 
 QMenuBar {
-	background-color:#666;
+	background-color:#343434;
 }
 
 QMenuBar::item {
-	background-color:#666;
+	background-color:#343434;
 	color:#ddd;
 }
 
@@ -53,7 +53,7 @@ QMenuBar::item:selected {
 }
 
 QMenu {
-	background-color:#555;
+	background-color:#343434;
 }
 
 QMenu::item {
@@ -61,7 +61,7 @@ QMenu::item {
 }
 
 QMenu::item:selected {
-	background-color:#333;
+	background-color:#444;
 	color:#ddd;
 }
 
@@ -111,13 +111,13 @@ QProgressBar {
 }
 
 QProgressBar::chunk {
-	background-color: #343434;
+	background-color: #3a3a3a;
 	width: 20px;
 }
 
 QLabel#progressBarLabel {
 	background-color: transparent;
-	color: #343434;
+	color: #ddd;
 	padding-left: 5px;
 	padding-right: 5px;
 }
